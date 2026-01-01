@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Python Type Hints (Analogous to Java Generics)Python supports type hints for static type checking (e.g., with mypy), which is similar to Java generics but optional and enforced only by tools, not at">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python Coding">
+<meta property="og:url" content="http://example.com/2025/08/28/lang/python_coding/index.html">
+<meta property="og:site_name" content="Perry&#39;s">
+<meta property="og:description" content="Python Type Hints (Analogous to Java Generics)Python supports type hints for static type checking (e.g., with mypy), which is similar to Java generics but optional and enforced only by tools, not at">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-08-27T23:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-17T01:19:24.895Z">
+<meta property="article:author" content="peiyouyao">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2025/08/28/lang/python_coding/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Python Coding | Perry's</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Perry's</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">tech / reading / muse / painting</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>Schedule</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/28/lang/python_coding/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/126999663?v=4">
+      <meta itemprop="name" content="peiyouyao">
+      <meta itemprop="description" content="...">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Perry's">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Python Coding
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-08-28 00:00:00" itemprop="dateCreated datePublished" datetime="2025-08-28T00:00:00+01:00">2025-08-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-12-17 01:19:24" itemprop="dateModified" datetime="2025-12-17T01:19:24+00:00">2025-12-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/lang/" itemprop="url" rel="index"><span itemprop="name">lang</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <hr>
+<h1 id="Python-Type-Hints-Analogous-to-Java-Generics"><a href="#Python-Type-Hints-Analogous-to-Java-Generics" class="headerlink" title="Python Type Hints (Analogous to Java Generics)"></a>Python Type Hints (Analogous to Java Generics)</h1><p>Python supports <strong>type hints</strong> for static type checking (e.g., with <code>mypy</code>), which is similar to Java generics but optional and enforced only by tools, not at runtime. Python is dynamically typed, so type hints are for clarity and tooling, not compilation.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">List</span>, <span class="type">Dict</span>, <span class="type">Set</span>, TypeVar, <span class="type">Generic</span></span><br><span class="line"></span><br><span class="line">T = TypeVar(<span class="string">&#x27;T&#x27;</span>)  <span class="comment"># Generic type variable, like Java&#x27;s T</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Resp</span>(<span class="type">Generic</span>[T]):  <span class="comment"># Generic class</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, data: T, msg: <span class="built_in">str</span>, code: <span class="built_in">int</span></span>):</span><br><span class="line">        <span class="variable language_">self</span>.data: T = data</span><br><span class="line">        <span class="variable language_">self</span>.msg: <span class="built_in">str</span> = msg</span><br><span class="line">        <span class="variable language_">self</span>.code: <span class="built_in">int</span> = code</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>Type Variables</strong>: Use <code>TypeVar</code> for generic types (like <code>T</code>, <code>K</code>, <code>V</code> in Java).</li>
+<li><strong>No Runtime Type Erasure</strong>: Unlike Java’s generics, Python’s type hints are not erased but are ignored at runtime unless explicitly checked.</li>
+<li><strong>Common Types</strong>: <code>List[T]</code>, <code>Dict[K, V]</code>, <code>Set[T]</code>, etc., from the <code>typing</code> module.</li>
+</ul>
+<h2 id="Generic-Functions"><a href="#Generic-Functions" class="headerlink" title="Generic Functions"></a>Generic Functions</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> TypeVar, <span class="type">Callable</span></span><br><span class="line"></span><br><span class="line">T = TypeVar(<span class="string">&#x27;T&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">process_name</span>(<span class="params">name: T</span>) -&gt; T:</span><br><span class="line">    <span class="keyword">return</span> name</span><br><span class="line"></span><br><span class="line"><span class="comment"># Example usage</span></span><br><span class="line">result: <span class="built_in">str</span> = process_name(<span class="string">&quot;Mozart&quot;</span>)  <span class="comment"># Type hint ensures str</span></span><br><span class="line">result_int: <span class="built_in">int</span> = process_name(<span class="number">42</span>)    <span class="comment"># Type hint ensures int</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Python-Built-in-Types-Analogous-to-Java-Wrapper-Classes"><a href="#Python-Built-in-Types-Analogous-to-Java-Wrapper-Classes" class="headerlink" title="Python Built-in Types (Analogous to Java Wrapper Classes)"></a>Python Built-in Types (Analogous to Java Wrapper Classes)</h1><p>Python’s basic types (<code>int</code>, <code>float</code>, <code>str</code>, <code>bool</code>) are immutable and don’t require explicit wrapper classes like Java’s <code>Integer</code> or <code>Double</code>. However, Python provides methods for type conversion.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Type conversions</span></span><br><span class="line">num_str: <span class="built_in">str</span> = <span class="string">&quot;123&quot;</span></span><br><span class="line">num_int: <span class="built_in">int</span> = <span class="built_in">int</span>(num_str)  <span class="comment"># String to int</span></span><br><span class="line">num_float: <span class="built_in">float</span> = <span class="built_in">float</span>(num_str)  <span class="comment"># String to float</span></span><br><span class="line">num_str_back: <span class="built_in">str</span> = <span class="built_in">str</span>(num_int)  <span class="comment"># Int to string</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Constants</span></span><br><span class="line">max_int: <span class="built_in">int</span> = <span class="number">2</span>**<span class="number">31</span> - <span class="number">1</span>  <span class="comment"># Similar to Integer.MAX_VALUE (for 32-bit int)</span></span><br><span class="line">min_int: <span class="built_in">int</span> = -<span class="number">2</span>**<span class="number">31</span>     <span class="comment"># Similar to Integer.MIN_VALUE</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>No Auto-Boxing&#x2F;Unboxing</strong>: Python doesn’t distinguish between primitive and wrapper types; <code>int</code> is an object with methods like <code>.__str__()</code>.</li>
+<li><strong>Caching</strong>: Small integers (<code>-5</code> to <code>256</code>) and some strings are cached (similar to Java’s <code>Integer</code> cache for <code>-128</code> to <code>127</code>).</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a: <span class="built_in">int</span> = <span class="number">256</span></span><br><span class="line">b: <span class="built_in">int</span> = <span class="number">256</span></span><br><span class="line"><span class="built_in">print</span>(a <span class="keyword">is</span> b)  <span class="comment"># True (cached)</span></span><br><span class="line"></span><br><span class="line">c: <span class="built_in">int</span> = <span class="number">257</span></span><br><span class="line">d: <span class="built_in">int</span> = <span class="number">257</span></span><br><span class="line"><span class="built_in">print</span>(c <span class="keyword">is</span> d)  <span class="comment"># False (not cached)</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Python-Lists-Analogous-to-Java-Arrays-and-ArrayList"><a href="#Python-Lists-Analogous-to-Java-Arrays-and-ArrayList" class="headerlink" title="Python Lists (Analogous to Java Arrays and ArrayList)"></a>Python Lists (Analogous to Java Arrays and ArrayList)</h1><p>Python’s <code>list</code> is a dynamic array, similar to Java’s <code>ArrayList</code>. It’s mutable, resizable, and supports random access.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Initialize list</span></span><br><span class="line">notes: <span class="type">List</span>[<span class="built_in">str</span>] = [<span class="string">&quot;C&quot;</span>, <span class="string">&quot;C#&quot;</span>, <span class="string">&quot;D&quot;</span>, <span class="string">&quot;D#&quot;</span>, <span class="string">&quot;E&quot;</span>, <span class="string">&quot;F&quot;</span>, <span class="string">&quot;F#&quot;</span>, <span class="string">&quot;G&quot;</span>, <span class="string">&quot;G#&quot;</span>, <span class="string">&quot;A&quot;</span>, <span class="string">&quot;A#&quot;</span>, <span class="string">&quot;B&quot;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Basic operations</span></span><br><span class="line">notes.append(<span class="string">&quot;C&quot;</span>)          <span class="comment"># Add element (O(1) amortized)</span></span><br><span class="line">notes.insert(<span class="number">1</span>, <span class="string">&quot;Db&quot;</span>)      <span class="comment"># Insert at index (O(n))</span></span><br><span class="line">notes.pop()                <span class="comment"># Remove last (O(1))</span></span><br><span class="line">notes.pop(<span class="number">0</span>)               <span class="comment"># Remove at index (O(n))</span></span><br><span class="line">notes[<span class="number">2</span>] = <span class="string">&quot;D2&quot;</span>            <span class="comment"># Update element (O(1))</span></span><br><span class="line"><span class="built_in">print</span>(notes[<span class="number">0</span>])            <span class="comment"># Access element (O(1))</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Slicing (similar to Java&#x27;s subList)</span></span><br><span class="line">subset: <span class="type">List</span>[<span class="built_in">str</span>] = notes[<span class="number">1</span>:<span class="number">4</span>]  <span class="comment"># Returns [&quot;Db&quot;, &quot;D2&quot;, &quot;D#&quot;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># List comprehension (similar to Java Stream)</span></span><br><span class="line">evens: <span class="type">List</span>[<span class="built_in">int</span>] = [x <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>) <span class="keyword">if</span> x % <span class="number">2</span> == <span class="number">0</span>]  <span class="comment"># [0, 2, 4, 6, 8]</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>Performance</strong>: <ul>
+<li>Access&#x2F;Modify: O(1)</li>
+<li>Insert&#x2F;Delete (non-end): O(n)</li>
+<li>Append&#x2F;Pop (end): O(1) amortized</li>
+</ul>
+</li>
+<li><strong>Thread Safety</strong>: Python lists are not thread-safe (use <code>threading.Lock</code> if needed).</li>
+<li><strong>Immutable Alternative</strong>: Use <code>tuple</code> for immutable sequences.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Tuple (immutable)</span></span><br><span class="line">notes_tuple: <span class="built_in">tuple</span> = (<span class="string">&quot;C&quot;</span>, <span class="string">&quot;D&quot;</span>, <span class="string">&quot;E&quot;</span>)</span><br><span class="line"><span class="comment"># notes_tuple[0] = &quot;F&quot;  # Error: tuples are immutable</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Python-Sets-Analogous-to-Java-Set"><a href="#Python-Sets-Analogous-to-Java-Set" class="headerlink" title="Python Sets (Analogous to Java Set)"></a>Python Sets (Analogous to Java Set)</h1><p>Python’s <code>set</code> is similar to Java’s <code>HashSet</code>, providing O(1) average-case operations for add, remove, and lookup. Python lacks direct equivalents to <code>LinkedHashSet</code> and <code>TreeSet</code>, but alternatives exist.</p>
+<h2 id="set-Analogous-to-HashSet"><a href="#set-Analogous-to-HashSet" class="headerlink" title="set (Analogous to HashSet)"></a><code>set</code> (Analogous to HashSet)</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Initialize set</span></span><br><span class="line">unique_notes: <span class="type">Set</span>[<span class="built_in">str</span>] = &#123;<span class="string">&quot;C&quot;</span>, <span class="string">&quot;D&quot;</span>, <span class="string">&quot;E&quot;</span>&#125;</span><br><span class="line">unique_notes.add(<span class="string">&quot;F&quot;</span>)           <span class="comment"># Add element (O(1) average)</span></span><br><span class="line">unique_notes.remove(<span class="string">&quot;C&quot;</span>)        <span class="comment"># Remove element (O(1) average, raises KeyError if not found)</span></span><br><span class="line">unique_notes.discard(<span class="string">&quot;D&quot;</span>)       <span class="comment"># Remove if present (O(1) average, no error)</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;E&quot;</span> <span class="keyword">in</span> unique_notes)      <span class="comment"># Check containment (O(1) average)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Set operations</span></span><br><span class="line">set1: <span class="type">Set</span>[<span class="built_in">int</span>] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;</span><br><span class="line">set2: <span class="type">Set</span>[<span class="built_in">int</span>] = &#123;<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;</span><br><span class="line"><span class="built_in">print</span>(set1 | set2)  <span class="comment"># Union: &#123;1, 2, 3, 4&#125;</span></span><br><span class="line"><span class="built_in">print</span>(set1 &amp; set2)  <span class="comment"># Intersection: &#123;2, 3&#125;</span></span><br><span class="line"><span class="built_in">print</span>(set1 - set2)  <span class="comment"># Difference: &#123;1&#125;</span></span><br><span class="line"><span class="built_in">print</span>(set1 ^ set2)  <span class="comment"># Symmetric difference: &#123;1, 4&#125;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>Custom Objects</strong>: Must implement <code>__hash__</code> and <code>__eq__</code> for use in sets (similar to Java’s <code>hashCode</code> and <code>equals</code>).</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">User</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, <span class="built_in">id</span>: <span class="built_in">int</span>, username: <span class="built_in">str</span></span>):</span><br><span class="line">        <span class="variable language_">self</span>.<span class="built_in">id</span>: <span class="built_in">int</span> = <span class="built_in">id</span></span><br><span class="line">        <span class="variable language_">self</span>.username: <span class="built_in">str</span> = username</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__hash__</span>(<span class="params">self</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">hash</span>((<span class="variable language_">self</span>.<span class="built_in">id</span>, <span class="variable language_">self</span>.username))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__eq__</span>(<span class="params">self, other</span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(other, User):</span><br><span class="line">            <span class="keyword">return</span> <span class="variable language_">self</span>.<span class="built_in">id</span> == other.<span class="built_in">id</span> <span class="keyword">and</span> <span class="variable language_">self</span>.username == other.username</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">users: <span class="type">Set</span>[User] = &#123;User(<span class="number">1</span>, <span class="string">&quot;Bach&quot;</span>), User(<span class="number">2</span>, <span class="string">&quot;Beethoven&quot;</span>)&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Ordered-Set-Analogous-to-LinkedHashSet"><a href="#Ordered-Set-Analogous-to-LinkedHashSet" class="headerlink" title="Ordered Set (Analogous to LinkedHashSet)"></a>Ordered Set (Analogous to LinkedHashSet)</h2><p>Python’s standard library doesn’t have a <code>LinkedHashSet</code> equivalent, but <code>collections.OrderedDict</code> (since Python 3.7, regular <code>dict</code> preserves insertion order) or third-party libraries like <code>ordered-set</code> can mimic it.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> OrderedDict</span><br><span class="line"></span><br><span class="line"><span class="comment"># Using OrderedDict as an ordered set</span></span><br><span class="line">ordered_set = OrderedDict.fromkeys([<span class="string">&quot;C&quot;</span>, <span class="string">&quot;D&quot;</span>, <span class="string">&quot;E&quot;</span>])  <span class="comment"># Keys maintain insertion order</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">list</span>(ordered_set.keys()))  <span class="comment"># [&quot;C&quot;, &quot;D&quot;, &quot;E&quot;]</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Sorted-Set-Analogous-to-TreeSet"><a href="#Sorted-Set-Analogous-to-TreeSet" class="headerlink" title="Sorted Set (Analogous to TreeSet)"></a>Sorted Set (Analogous to TreeSet)</h2><p>Python lacks a built-in <code>TreeSet</code>, but you can use <code>sortedcontainers.SortedSet</code> (third-party) or maintain a sorted list with <code>bisect</code> for sorted operations.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sortedcontainers <span class="keyword">import</span> SortedSet</span><br><span class="line"></span><br><span class="line">sorted_set: SortedSet = SortedSet([<span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>])</span><br><span class="line"><span class="built_in">print</span>(sorted_set)  <span class="comment"># SortedSet([1, 2, 3])</span></span><br><span class="line">sorted_set.add(<span class="number">4</span>)  <span class="comment"># O(log n)</span></span><br><span class="line"><span class="built_in">print</span>(sorted_set[<span class="number">0</span>])  <span class="comment"># 1 (smallest, O(1))</span></span><br><span class="line"><span class="built_in">print</span>(sorted_set[-<span class="number">1</span>])  <span class="comment"># 4 (largest, O(1))</span></span><br><span class="line"><span class="built_in">print</span>(sorted_set.bisect_left(<span class="number">2</span>))  <span class="comment"># Index where 2 would be inserted (O(log n))</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>Alternative with <code>bisect</code></strong>:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> bisect</span><br><span class="line"></span><br><span class="line">sorted_list: <span class="type">List</span>[<span class="built_in">int</span>] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">bisect.insort(sorted_list, <span class="number">2</span>)  <span class="comment"># Inserts 2 in sorted order (O(n) for insert, O(log n) for search)</span></span><br><span class="line"><span class="built_in">print</span>(sorted_list)  <span class="comment"># [1, 2, 2, 3]</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="Python-Dictionaries-Analogous-to-Java-Map"><a href="#Python-Dictionaries-Analogous-to-Java-Map" class="headerlink" title="Python Dictionaries (Analogous to Java Map)"></a>Python Dictionaries (Analogous to Java Map)</h1><p>Python’s <code>dict</code> is similar to Java’s <code>HashMap</code>, with O(1) average-case operations. Since Python 3.7, <code>dict</code> preserves insertion order (like <code>LinkedHashMap</code>).</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Initialize dictionary</span></span><br><span class="line">composer_scores: <span class="type">Dict</span>[<span class="built_in">str</span>, <span class="built_in">int</span>] = &#123;<span class="string">&quot;Bach&quot;</span>: <span class="number">95</span>, <span class="string">&quot;Beethoven&quot;</span>: <span class="number">90</span>, <span class="string">&quot;Mozart&quot;</span>: <span class="number">85</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Basic operations</span></span><br><span class="line">composer_scores[<span class="string">&quot;Schubert&quot;</span>] = <span class="number">88</span>  <span class="comment"># Add/Update (O(1) average)</span></span><br><span class="line"><span class="keyword">del</span> composer_scores[<span class="string">&quot;Bach&quot;</span>]       <span class="comment"># Remove (O(1) average)</span></span><br><span class="line"><span class="built_in">print</span>(composer_scores.get(<span class="string">&quot;Mozart&quot;</span>, <span class="number">0</span>))  <span class="comment"># Get with default (O(1) average)</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Beethoven&quot;</span> <span class="keyword">in</span> composer_scores)    <span class="comment"># Check key (O(1) average)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Iteration</span></span><br><span class="line"><span class="keyword">for</span> key <span class="keyword">in</span> composer_scores:  <span class="comment"># Iterate keys</span></span><br><span class="line">    <span class="built_in">print</span>(key)</span><br><span class="line"><span class="keyword">for</span> value <span class="keyword">in</span> composer_scores.values():  <span class="comment"># Iterate values</span></span><br><span class="line">    <span class="built_in">print</span>(value)</span><br><span class="line"><span class="keyword">for</span> key, value <span class="keyword">in</span> composer_scores.items():  <span class="comment"># Iterate key-value pairs</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;key&#125;</span>: <span class="subst">&#123;value&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Dictionary comprehension</span></span><br><span class="line">squares: <span class="type">Dict</span>[<span class="built_in">int</span>, <span class="built_in">int</span>] = &#123;x: x*x <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>)&#125;  <span class="comment"># &#123;0: 0, 1: 1, 2: 4, 3: 9, 4: 16&#125;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>Sorted Dictionary (Analogous to TreeMap)</strong>: Use <code>sortedcontainers.SortedDict</code> for sorted keys.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sortedcontainers <span class="keyword">import</span> SortedDict</span><br><span class="line"></span><br><span class="line">sorted_dict = SortedDict(&#123;<span class="string">&quot;C&quot;</span>: <span class="number">1</span>, <span class="string">&quot;A&quot;</span>: <span class="number">2</span>, <span class="string">&quot;B&quot;</span>: <span class="number">3</span>&#125;)</span><br><span class="line"><span class="built_in">print</span>(sorted_dict)  <span class="comment"># SortedDict(&#123;&#x27;A&#x27;: 2, &#x27;B&#x27;: 3, &#x27;C&#x27;: 1&#125;)</span></span><br><span class="line"><span class="built_in">print</span>(sorted_dict.peekitem(<span class="number">0</span>))  <span class="comment"># (&#x27;A&#x27;, 2) - smallest key</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Python-Deques-Analogous-to-Java-Deque"><a href="#Python-Deques-Analogous-to-Java-Deque" class="headerlink" title="Python Deques (Analogous to Java Deque)"></a>Python Deques (Analogous to Java Deque)</h1><p>Python’s <code>collections.deque</code> is a double-ended queue, similar to Java’s <code>ArrayDeque</code>.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> deque</span><br><span class="line"></span><br><span class="line">dq: deque = deque([<span class="string">&quot;C&quot;</span>, <span class="string">&quot;D&quot;</span>, <span class="string">&quot;E&quot;</span>])</span><br><span class="line">dq.append(<span class="string">&quot;F&quot;</span>)        <span class="comment"># Add to right (O(1))</span></span><br><span class="line">dq.appendleft(<span class="string">&quot;B&quot;</span>)    <span class="comment"># Add to left (O(1))</span></span><br><span class="line">dq.pop()              <span class="comment"># Remove from right (O(1))</span></span><br><span class="line">dq.popleft()          <span class="comment"># Remove from left (O(1))</span></span><br><span class="line"><span class="built_in">print</span>(dq[<span class="number">0</span>])          <span class="comment"># Access first (O(1))</span></span><br><span class="line"><span class="built_in">print</span>(dq[-<span class="number">1</span>])         <span class="comment"># Access last (O(1))</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>Use Case</strong>: Efficient for stacks&#x2F;queues in problems (e.g., sliding window, BFS).</li>
+</ul>
+<h1 id="Python-Heaps-Analogous-to-Java-PriorityQueue"><a href="#Python-Heaps-Analogous-to-Java-PriorityQueue" class="headerlink" title="Python Heaps (Analogous to Java PriorityQueue)"></a>Python Heaps (Analogous to Java PriorityQueue)</h1><p>Python’s <code>heapq</code> module provides a min-heap, similar to Java’s <code>PriorityQueue</code>.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"></span><br><span class="line">heap: <span class="type">List</span>[<span class="built_in">int</span>] = [<span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>]</span><br><span class="line">heapq.heapify(heap)  <span class="comment"># O(n)</span></span><br><span class="line">heapq.heappush(heap, <span class="number">4</span>)  <span class="comment"># O(log n)</span></span><br><span class="line"><span class="built_in">print</span>(heapq.heappop(heap))  <span class="comment"># 1 (O(log n))</span></span><br><span class="line"><span class="built_in">print</span>(heap[<span class="number">0</span>])  <span class="comment"># Peek smallest (O(1))</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Max-heap (negate values)</span></span><br><span class="line">max_heap: <span class="type">List</span>[<span class="built_in">int</span>] = [-x <span class="keyword">for</span> x <span class="keyword">in</span> [<span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>]]</span><br><span class="line">heapq.heapify(max_heap)</span><br><span class="line"><span class="built_in">print</span>(-heapq.heappop(max_heap))  <span class="comment"># 3</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>Custom Objects</strong>: Use tuples with priority or define <code>__lt__</code> for custom types.</li>
+</ul>
+<h1 id="List-to-Set-Dict-and-Vice-Versa"><a href="#List-to-Set-Dict-and-Vice-Versa" class="headerlink" title="List to Set&#x2F;Dict and Vice Versa"></a>List to Set&#x2F;Dict and Vice Versa</h1><h2 id="List-to-Set-Dict"><a href="#List-to-Set-Dict" class="headerlink" title="List to Set&#x2F;Dict"></a>List to Set&#x2F;Dict</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">notes: <span class="type">List</span>[<span class="built_in">str</span>] = [<span class="string">&quot;C&quot;</span>, <span class="string">&quot;D&quot;</span>, <span class="string">&quot;C&quot;</span>, <span class="string">&quot;E&quot;</span>]</span><br><span class="line">unique_notes: <span class="type">Set</span>[<span class="built_in">str</span>] = <span class="built_in">set</span>(notes)  <span class="comment"># &#123;&quot;C&quot;, &quot;D&quot;, &quot;E&quot;&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># List to dict</span></span><br><span class="line">pairs: <span class="type">List</span>[<span class="built_in">tuple</span>[<span class="built_in">str</span>, <span class="built_in">int</span>]] = [(<span class="string">&quot;Bach&quot;</span>, <span class="number">95</span>), (<span class="string">&quot;Beethoven&quot;</span>, <span class="number">90</span>)]</span><br><span class="line">composer_scores: <span class="type">Dict</span>[<span class="built_in">str</span>, <span class="built_in">int</span>] = <span class="built_in">dict</span>(pairs)  <span class="comment"># &#123;&quot;Bach&quot;: 95, &quot;Beethoven&quot;: 90&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Set-Dict-to-List"><a href="#Set-Dict-to-List" class="headerlink" title="Set&#x2F;Dict to List"></a>Set&#x2F;Dict to List</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">unique_notes: <span class="type">Set</span>[<span class="built_in">str</span>] = &#123;<span class="string">&quot;C&quot;</span>, <span class="string">&quot;D&quot;</span>, <span class="string">&quot;E&quot;</span>&#125;</span><br><span class="line">notes_list: <span class="type">List</span>[<span class="built_in">str</span>] = <span class="built_in">list</span>(unique_notes)  <span class="comment"># [&quot;C&quot;, &quot;D&quot;, &quot;E&quot;]</span></span><br><span class="line"></span><br><span class="line">composer_scores: <span class="type">Dict</span>[<span class="built_in">str</span>, <span class="built_in">int</span>] = &#123;<span class="string">&quot;Bach&quot;</span>: <span class="number">95</span>, <span class="string">&quot;Beethoven&quot;</span>: <span class="number">90</span>&#125;</span><br><span class="line">keys: <span class="type">List</span>[<span class="built_in">str</span>] = <span class="built_in">list</span>(composer_scores.keys())  <span class="comment"># [&quot;Bach&quot;, &quot;Beethoven&quot;]</span></span><br><span class="line">values: <span class="type">List</span>[<span class="built_in">int</span>] = <span class="built_in">list</span>(composer_scores.values())  <span class="comment"># [95, 90]</span></span><br><span class="line">items: <span class="type">List</span>[<span class="built_in">tuple</span>[<span class="built_in">str</span>, <span class="built_in">int</span>]] = <span class="built_in">list</span>(composer_scores.items())  <span class="comment"># [(&quot;Bach&quot;, 95), (&quot;Beethoven&quot;, 90)]</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Sorting-in-Python"><a href="#Sorting-in-Python" class="headerlink" title="Sorting in Python"></a>Sorting in Python</h1><p>Python’s <code>sorted()</code> and <code>list.sort()</code> are analogous to Java’s <code>Collections.sort</code> and <code>Arrays.sort</code>.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Default sorting</span></span><br><span class="line">notes: <span class="type">List</span>[<span class="built_in">str</span>] = [<span class="string">&quot;Beethoven&quot;</span>, <span class="string">&quot;Bach&quot;</span>, <span class="string">&quot;Mozart&quot;</span>]</span><br><span class="line">sorted_notes: <span class="type">List</span>[<span class="built_in">str</span>] = <span class="built_in">sorted</span>(notes)  <span class="comment"># New sorted list</span></span><br><span class="line">notes.sort()  <span class="comment"># In-place sort</span></span><br><span class="line"><span class="built_in">print</span>(sorted_notes)  <span class="comment"># [&quot;Bach&quot;, &quot;Beethoven&quot;, &quot;Mozart&quot;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Custom sorting with key function</span></span><br><span class="line">sorted_by_length: <span class="type">List</span>[<span class="built_in">str</span>] = <span class="built_in">sorted</span>(notes, key=<span class="built_in">len</span>)  <span class="comment"># Sort by length</span></span><br><span class="line"><span class="built_in">print</span>(sorted_by_length)  <span class="comment"># [&quot;Bach&quot;, &quot;Mozart&quot;, &quot;Beethoven&quot;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Reverse sorting</span></span><br><span class="line">sorted_reverse: <span class="type">List</span>[<span class="built_in">str</span>] = <span class="built_in">sorted</span>(notes, reverse=<span class="literal">True</span>)  <span class="comment"># [&quot;Mozart&quot;, &quot;Beethoven&quot;, &quot;Bach&quot;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Custom key function with multiple criteria</span></span><br><span class="line">users: <span class="type">List</span>[<span class="built_in">tuple</span>[<span class="built_in">int</span>, <span class="built_in">str</span>]] = [(<span class="number">1</span>, <span class="string">&quot;Bach&quot;</span>), (<span class="number">2</span>, <span class="string">&quot;Beethoven&quot;</span>), (<span class="number">1</span>, <span class="string">&quot;Mozart&quot;</span>)]</span><br><span class="line">sorted_users: <span class="type">List</span>[<span class="built_in">tuple</span>[<span class="built_in">int</span>, <span class="built_in">str</span>]] = <span class="built_in">sorted</span>(users, key=<span class="keyword">lambda</span> x: (x[<span class="number">0</span>], x[<span class="number">1</span>]))</span><br><span class="line"><span class="built_in">print</span>(sorted_users)  <span class="comment"># [(1, &quot;Bach&quot;), (1, &quot;Mozart&quot;), (2, &quot;Beethoven&quot;)]</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>Note</strong>: <code>sorted()</code> works on any iterable and returns a list; <code>list.sort()</code> is in-place and only for lists. For primitive-like lists (e.g., <code>int</code>), no boxing is needed, unlike Java.</li>
+</ul>
+<h1 id="Stream-like-Operations-in-Python"><a href="#Stream-like-Operations-in-Python" class="headerlink" title="Stream-like Operations in Python"></a>Stream-like Operations in Python</h1><p>Python doesn’t have a direct <code>Stream</code> API, but list comprehensions, generators, and <code>itertools</code> provide similar functionality for functional-style processing.</p>
+<h2 id="Creating-Streams-Iterables"><a href="#Creating-Streams-Iterables" class="headerlink" title="Creating Streams (Iterables)"></a>Creating Streams (Iterables)</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">List</span></span><br><span class="line"><span class="keyword">from</span> itertools <span class="keyword">import</span> chain</span><br><span class="line"></span><br><span class="line"><span class="comment"># From list</span></span><br><span class="line">lst: <span class="type">List</span>[<span class="built_in">str</span>] = [<span class="string">&quot;Bach&quot;</span>, <span class="string">&quot;Beethoven&quot;</span>, <span class="string">&quot;Mozart&quot;</span>]</span><br><span class="line"><span class="keyword">for</span> composer <span class="keyword">in</span> lst:</span><br><span class="line">    <span class="built_in">print</span>(composer)</span><br><span class="line"></span><br><span class="line"><span class="comment"># From dictionary</span></span><br><span class="line">composer_scores: <span class="type">Dict</span>[<span class="built_in">str</span>, <span class="built_in">int</span>] = &#123;<span class="string">&quot;Bach&quot;</span>: <span class="number">95</span>, <span class="string">&quot;Beethoven&quot;</span>: <span class="number">90</span>&#125;</span><br><span class="line"><span class="keyword">for</span> key, value <span class="keyword">in</span> composer_scores.items():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;key&#125;</span>: <span class="subst">&#123;value&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># From array-like data</span></span><br><span class="line">nums: <span class="type">List</span>[<span class="built_in">int</span>] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br><span class="line">    <span class="built_in">print</span>(num)</span><br><span class="line"></span><br><span class="line"><span class="comment"># From arbitrary data</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> [<span class="number">3</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]:</span><br><span class="line">    <span class="built_in">print</span>(x)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Intermediate-Operations"><a href="#Intermediate-Operations" class="headerlink" title="Intermediate Operations"></a>Intermediate Operations</h2><h3 id="Filter"><a href="#Filter" class="headerlink" title="Filter"></a>Filter</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">lst: <span class="type">List</span>[<span class="built_in">str</span>] = [<span class="string">&quot;EEFG&quot;</span>, <span class="string">&quot;GFED&quot;</span>, <span class="string">&quot;CCDE&quot;</span>, <span class="string">&quot;EDD-&quot;</span>]</span><br><span class="line">filtered: <span class="type">List</span>[<span class="built_in">str</span>] = [s <span class="keyword">for</span> s <span class="keyword">in</span> lst <span class="keyword">if</span> <span class="keyword">not</span> s.endswith(<span class="string">&quot;-&quot;</span>)]  <span class="comment"># [&quot;EEFG&quot;, &quot;GFED&quot;, &quot;CCDE&quot;]</span></span><br><span class="line"><span class="comment"># Or using filter()</span></span><br><span class="line">filtered_alt: <span class="type">List</span>[<span class="built_in">str</span>] = <span class="built_in">list</span>(<span class="built_in">filter</span>(<span class="keyword">lambda</span> s: <span class="keyword">not</span> s.endswith(<span class="string">&quot;-&quot;</span>), lst))</span><br></pre></td></tr></table></figure>
+
+<h3 id="Limit-Skip-Distinct"><a href="#Limit-Skip-Distinct" class="headerlink" title="Limit&#x2F;Skip&#x2F;Distinct"></a>Limit&#x2F;Skip&#x2F;Distinct</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">nums: <span class="type">List</span>[<span class="built_in">int</span>] = [<span class="number">3</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>]</span><br><span class="line">limited: <span class="type">List</span>[<span class="built_in">int</span>] = nums[:<span class="number">3</span>]  <span class="comment"># First 3: [3, 3, 4]</span></span><br><span class="line">skipped: <span class="type">List</span>[<span class="built_in">int</span>] = nums[<span class="number">3</span>:]  <span class="comment"># Skip first 3: [5, 5, 4, 3]</span></span><br><span class="line">distinct: <span class="type">List</span>[<span class="built_in">int</span>] = <span class="built_in">list</span>(<span class="built_in">set</span>(nums))  <span class="comment"># [3, 4, 5] (order not preserved)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Using itertools for distinct with order preservation</span></span><br><span class="line"><span class="keyword">from</span> itertools <span class="keyword">import</span> groupby</span><br><span class="line">sorted_nums = <span class="built_in">sorted</span>(nums)</span><br><span class="line">distinct_ordered: <span class="type">List</span>[<span class="built_in">int</span>] = [k <span class="keyword">for</span> k, _ <span class="keyword">in</span> groupby(sorted_nums)]  <span class="comment"># [3, 4, 5]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Concat"><a href="#Concat" class="headerlink" title="Concat"></a>Concat</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> itertools <span class="keyword">import</span> chain</span><br><span class="line"></span><br><span class="line">lst1: <span class="type">List</span>[<span class="built_in">str</span>] = [<span class="string">&quot;EEFG&quot;</span>, <span class="string">&quot;GFED&quot;</span>]</span><br><span class="line">lst2: <span class="type">List</span>[<span class="built_in">str</span>] = [<span class="string">&quot;GCDEF&quot;</span>, <span class="string">&quot;GCC&quot;</span>]</span><br><span class="line">concatenated: <span class="type">List</span>[<span class="built_in">str</span>] = <span class="built_in">list</span>(chain(lst1, lst2))  <span class="comment"># [&quot;EEFG&quot;, &quot;GFED&quot;, &quot;GCDEF&quot;, &quot;GCC&quot;]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">lst: <span class="type">List</span>[<span class="built_in">str</span>] = [<span class="string">&quot;C-1&quot;</span>, <span class="string">&quot;D-2&quot;</span>, <span class="string">&quot;E-3&quot;</span>]</span><br><span class="line">values: <span class="type">List</span>[<span class="built_in">int</span>] = [<span class="built_in">int</span>(s.split(<span class="string">&quot;-&quot;</span>)[<span class="number">1</span>]) <span class="keyword">for</span> s <span class="keyword">in</span> lst]  <span class="comment"># [1, 2, 3]</span></span><br><span class="line"><span class="comment"># Or using map()</span></span><br><span class="line">values_alt: <span class="type">List</span>[<span class="built_in">int</span>] = <span class="built_in">list</span>(<span class="built_in">map</span>(<span class="keyword">lambda</span> s: <span class="built_in">int</span>(s.split(<span class="string">&quot;-&quot;</span>)[<span class="number">1</span>]), lst))</span><br></pre></td></tr></table></figure>
+
+<h2 id="Terminal-Operations"><a href="#Terminal-Operations" class="headerlink" title="Terminal Operations"></a>Terminal Operations</h2><h3 id="ForEach"><a href="#ForEach" class="headerlink" title="ForEach"></a>ForEach</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">lst: <span class="type">List</span>[<span class="built_in">str</span>] = [<span class="string">&quot;Bach&quot;</span>, <span class="string">&quot;Beethoven&quot;</span>, <span class="string">&quot;Mozart&quot;</span>]</span><br><span class="line"><span class="keyword">for</span> s <span class="keyword">in</span> lst:</span><br><span class="line">    <span class="built_in">print</span>(s)</span><br><span class="line"><span class="comment"># Or</span></span><br><span class="line"><span class="built_in">list</span>(<span class="built_in">map</span>(<span class="built_in">print</span>, lst))  <span class="comment"># Less common, but functional style</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Count"><a href="#Count" class="headerlink" title="Count"></a>Count</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">lst: <span class="type">List</span>[<span class="built_in">str</span>] = [<span class="string">&quot;EEFG&quot;</span>, <span class="string">&quot;GFED&quot;</span>, <span class="string">&quot;CCDE&quot;</span>, <span class="string">&quot;EDD-&quot;</span>]</span><br><span class="line">count: <span class="built_in">int</span> = <span class="built_in">sum</span>(<span class="number">1</span> <span class="keyword">for</span> s <span class="keyword">in</span> lst <span class="keyword">if</span> s.startswith(<span class="string">&quot;G&quot;</span>) <span class="keyword">or</span> s.startswith(<span class="string">&quot;C&quot;</span>))  <span class="comment"># 3</span></span><br><span class="line"><span class="comment"># Or using len</span></span><br><span class="line">count_alt: <span class="built_in">int</span> = <span class="built_in">len</span>([s <span class="keyword">for</span> s <span class="keyword">in</span> lst <span class="keyword">if</span> s.startswith(<span class="string">&quot;G&quot;</span>) <span class="keyword">or</span> s.startswith(<span class="string">&quot;C&quot;</span>)])</span><br></pre></td></tr></table></figure>
+
+<h3 id="Collect-to-List-Set-Dict"><a href="#Collect-to-List-Set-Dict" class="headerlink" title="Collect to List&#x2F;Set&#x2F;Dict"></a>Collect to List&#x2F;Set&#x2F;Dict</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">lst: <span class="type">List</span>[<span class="built_in">str</span>] = [<span class="string">&quot;Bach-17&quot;</span>, <span class="string">&quot;Beethoven-19&quot;</span>, <span class="string">&quot;Mozart-18&quot;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># To list</span></span><br><span class="line">b_list: <span class="type">List</span>[<span class="built_in">str</span>] = [s <span class="keyword">for</span> s <span class="keyword">in</span> lst <span class="keyword">if</span> s.startswith(<span class="string">&quot;B&quot;</span>)]  <span class="comment"># [&quot;Bach-17&quot;, &quot;Beethoven-19&quot;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># To set</span></span><br><span class="line">b_set: <span class="type">Set</span>[<span class="built_in">str</span>] = <span class="built_in">set</span>(s <span class="keyword">for</span> s <span class="keyword">in</span> lst <span class="keyword">if</span> s.startswith(<span class="string">&quot;B&quot;</span>))  <span class="comment"># &#123;&quot;Bach-17&quot;, &quot;Beethoven-19&quot;&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># To dict</span></span><br><span class="line">b_map: <span class="type">Dict</span>[<span class="built_in">str</span>, <span class="built_in">int</span>] = &#123;s.split(<span class="string">&quot;-&quot;</span>)[<span class="number">0</span>]: <span class="built_in">int</span>(s.split(<span class="string">&quot;-&quot;</span>)[<span class="number">1</span>]) <span class="keyword">for</span> s <span class="keyword">in</span> lst <span class="keyword">if</span> s.startswith(<span class="string">&quot;B&quot;</span>)&#125;</span><br><span class="line"><span class="built_in">print</span>(b_map)  <span class="comment"># &#123;&quot;Bach&quot;: 17, &quot;Beethoven&quot;: 19&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Join-to-String"><a href="#Join-to-String" class="headerlink" title="Join to String"></a>Join to String</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">words: <span class="type">List</span>[<span class="built_in">str</span>] = [<span class="string">&quot;Hello&quot;</span>, <span class="string">&quot;world&quot;</span>, <span class="string">&quot;this&quot;</span>, <span class="string">&quot;is&quot;</span>, <span class="string">&quot;Python&quot;</span>]</span><br><span class="line">result: <span class="built_in">str</span> = <span class="string">&quot; &quot;</span>.join(words)  <span class="comment"># &quot;Hello world this is Python&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Generators-for-Lazy-Evaluation"><a href="#Generators-for-Lazy-Evaluation" class="headerlink" title="Generators for Lazy Evaluation"></a>Generators for Lazy Evaluation</h2><p>For memory-efficient stream-like processing, use generators:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">large_range</span>():</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1000000</span>):</span><br><span class="line">        <span class="keyword">yield</span> i</span><br><span class="line"></span><br><span class="line">evens = (x <span class="keyword">for</span> x <span class="keyword">in</span> large_range() <span class="keyword">if</span> x % <span class="number">2</span> == <span class="number">0</span>)  <span class="comment"># Lazy evaluation</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(evens))  <span class="comment"># 0 (processes one element at a time)</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Strings-and-Related"><a href="#Strings-and-Related" class="headerlink" title="Strings and Related"></a>Strings and Related</h1><ul>
+<li><strong>String</strong>: Immutable (<code>str</code>).</li>
+<li><strong>Mutable Alternatives</strong>: Use <code>list</code> of characters or <code>io.StringIO</code> for efficient string building.</li>
+<li><strong>Thread Safety</strong>: Strings and lists are not thread-safe; use <code>threading.Lock</code> if needed.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">s: <span class="built_in">str</span> = <span class="string">&quot;Hello&quot;</span></span><br><span class="line"><span class="comment"># s[0] = &quot;h&quot;  # Error: str is immutable</span></span><br><span class="line">chars: <span class="type">List</span>[<span class="built_in">str</span>] = <span class="built_in">list</span>(s)  <span class="comment"># [&quot;H&quot;, &quot;e&quot;, &quot;l&quot;, &quot;l&quot;, &quot;o&quot;]</span></span><br><span class="line">chars[<span class="number">0</span>] = <span class="string">&quot;h&quot;</span></span><br><span class="line">new_s: <span class="built_in">str</span> = <span class="string">&quot;&quot;</span>.join(chars)  <span class="comment"># &quot;hello&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="2D-Lists-Analogous-to-Java-2D-Arrays"><a href="#2D-Lists-Analogous-to-Java-2D-Arrays" class="headerlink" title="2D Lists (Analogous to Java 2D Arrays)"></a>2D Lists (Analogous to Java 2D Arrays)</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Initialize jagged 2D list</span></span><br><span class="line">arr: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]] = [[] <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>)]</span><br><span class="line">arr[<span class="number">0</span>] = [<span class="number">1</span>, <span class="number">2</span>]</span><br><span class="line">arr[<span class="number">1</span>] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">arr[<span class="number">2</span>] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line"><span class="built_in">print</span>(arr)  <span class="comment"># [[1, 2], [1, 2, 3], [1, 2, 3, 4]]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Fixed-size 2D list</span></span><br><span class="line">rows, cols = <span class="number">3</span>, <span class="number">4</span></span><br><span class="line">matrix: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]] = [[<span class="number">0</span>] * cols <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(rows)]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>Note</strong>: Avoid <code>[[0] * cols] * rows</code> as it creates shared references to the same inner list.</li>
+</ul>
+<h1 id="Summary-for-Problem-Solving"><a href="#Summary-for-Problem-Solving" class="headerlink" title="Summary for Problem-Solving"></a>Summary for Problem-Solving</h1><ul>
+<li><strong>List</strong>: Use for dynamic arrays, stacks, or queues (O(1) append&#x2F;pop).</li>
+<li><strong>Set</strong>: Use for O(1) lookups and uniqueness (e.g., deduplication in problems).</li>
+<li><strong>Dict</strong>: Use for key-value mappings, frequency counting, or graph adjacency lists.</li>
+<li><strong>Deque</strong>: Use for sliding windows, BFS, or double-ended operations.</li>
+<li><strong>Heapq</strong>: Use for priority queues (e.g., top-k problems, Dijkstra’s algorithm).</li>
+<li><strong>SortedSet&#x2F;SortedDict</strong>: Use for sorted data (install <code>sortedcontainers</code>).</li>
+<li><strong>Stream-like</strong>: Use list comprehensions or generators for concise, functional-style coding.</li>
+<li><strong>Sorting</strong>: Use <code>sorted()</code> or <code>list.sort()</code> with <code>key</code> for custom sorting.</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"><i class="fa fa-tag"></i> python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/07/23/tech/rabbitmq/" rel="prev" title="Rabbit MQ">
+      <i class="fa fa-chevron-left"></i> Rabbit MQ
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Python-Type-Hints-Analogous-to-Java-Generics"><span class="nav-number">1.</span> <span class="nav-text">Python Type Hints (Analogous to Java Generics)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Generic-Functions"><span class="nav-number">1.1.</span> <span class="nav-text">Generic Functions</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Python-Built-in-Types-Analogous-to-Java-Wrapper-Classes"><span class="nav-number">2.</span> <span class="nav-text">Python Built-in Types (Analogous to Java Wrapper Classes)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Python-Lists-Analogous-to-Java-Arrays-and-ArrayList"><span class="nav-number">3.</span> <span class="nav-text">Python Lists (Analogous to Java Arrays and ArrayList)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Python-Sets-Analogous-to-Java-Set"><span class="nav-number">4.</span> <span class="nav-text">Python Sets (Analogous to Java Set)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#set-Analogous-to-HashSet"><span class="nav-number">4.1.</span> <span class="nav-text">set (Analogous to HashSet)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ordered-Set-Analogous-to-LinkedHashSet"><span class="nav-number">4.2.</span> <span class="nav-text">Ordered Set (Analogous to LinkedHashSet)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sorted-Set-Analogous-to-TreeSet"><span class="nav-number">4.3.</span> <span class="nav-text">Sorted Set (Analogous to TreeSet)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Python-Dictionaries-Analogous-to-Java-Map"><span class="nav-number">5.</span> <span class="nav-text">Python Dictionaries (Analogous to Java Map)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Python-Deques-Analogous-to-Java-Deque"><span class="nav-number">6.</span> <span class="nav-text">Python Deques (Analogous to Java Deque)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Python-Heaps-Analogous-to-Java-PriorityQueue"><span class="nav-number">7.</span> <span class="nav-text">Python Heaps (Analogous to Java PriorityQueue)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#List-to-Set-Dict-and-Vice-Versa"><span class="nav-number">8.</span> <span class="nav-text">List to Set&#x2F;Dict and Vice Versa</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#List-to-Set-Dict"><span class="nav-number">8.1.</span> <span class="nav-text">List to Set&#x2F;Dict</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Set-Dict-to-List"><span class="nav-number">8.2.</span> <span class="nav-text">Set&#x2F;Dict to List</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Sorting-in-Python"><span class="nav-number">9.</span> <span class="nav-text">Sorting in Python</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Stream-like-Operations-in-Python"><span class="nav-number">10.</span> <span class="nav-text">Stream-like Operations in Python</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Creating-Streams-Iterables"><span class="nav-number">10.1.</span> <span class="nav-text">Creating Streams (Iterables)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Intermediate-Operations"><span class="nav-number">10.2.</span> <span class="nav-text">Intermediate Operations</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Filter"><span class="nav-number">10.2.1.</span> <span class="nav-text">Filter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Limit-Skip-Distinct"><span class="nav-number">10.2.2.</span> <span class="nav-text">Limit&#x2F;Skip&#x2F;Distinct</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Concat"><span class="nav-number">10.2.3.</span> <span class="nav-text">Concat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Map"><span class="nav-number">10.2.4.</span> <span class="nav-text">Map</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Terminal-Operations"><span class="nav-number">10.3.</span> <span class="nav-text">Terminal Operations</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ForEach"><span class="nav-number">10.3.1.</span> <span class="nav-text">ForEach</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Count"><span class="nav-number">10.3.2.</span> <span class="nav-text">Count</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Collect-to-List-Set-Dict"><span class="nav-number">10.3.3.</span> <span class="nav-text">Collect to List&#x2F;Set&#x2F;Dict</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Join-to-String"><span class="nav-number">10.3.4.</span> <span class="nav-text">Join to String</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Generators-for-Lazy-Evaluation"><span class="nav-number">10.4.</span> <span class="nav-text">Generators for Lazy Evaluation</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Strings-and-Related"><span class="nav-number">11.</span> <span class="nav-text">Strings and Related</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2D-Lists-Analogous-to-Java-2D-Arrays"><span class="nav-number">12.</span> <span class="nav-text">2D Lists (Analogous to Java 2D Arrays)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Summary-for-Problem-Solving"><span class="nav-number">13.</span> <span class="nav-text">Summary for Problem-Solving</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="peiyouyao"
+      src="https://avatars.githubusercontent.com/u/126999663?v=4">
+  <p class="site-author-name" itemprop="name">peiyouyao</p>
+  <div class="site-description" itemprop="description">...</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/peiyouyao" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;peiyouyao" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:peiyou-yao@outlook.com" title="E-Mail → mailto:peiyou-yao@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">peiyouyao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

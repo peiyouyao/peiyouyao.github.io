@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="🐧 使用 Clash + WSL 安装并配置 Docker 代理访问外网的完整指南 本笔记记录了在 Windows 主机上使用 Clash 实现代理，并在 WSL 中配置代理环境与 Docker 访问 Docker Hub 的全过程。   🧱 系统环境 Windows 主机已安装 Clash for Windows（英文版） 使用 WSL2（Ubuntu 发行版） 在 WSL 中独立安装了 D">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Clash in Win, proxy in wsl">
+<meta property="og:url" content="http://example.com/2025/04/23/tech/wsl2_clash_proxy_docker/index.html">
+<meta property="og:site_name" content="Perry&#39;s">
+<meta property="og:description" content="🐧 使用 Clash + WSL 安装并配置 Docker 代理访问外网的完整指南 本笔记记录了在 Windows 主机上使用 Clash 实现代理，并在 WSL 中配置代理环境与 Docker 访问 Docker Hub 的全过程。   🧱 系统环境 Windows 主机已安装 Clash for Windows（英文版） 使用 WSL2（Ubuntu 发行版） 在 WSL 中独立安装了 D">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-04-22T23:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-17T01:19:24.979Z">
+<meta property="article:author" content="peiyouyao">
+<meta property="article:tag" content="wsl">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2025/04/23/tech/wsl2_clash_proxy_docker/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Clash in Win, proxy in wsl | Perry's</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Perry's</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">tech / reading / muse / painting</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>Schedule</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/04/23/tech/wsl2_clash_proxy_docker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/126999663?v=4">
+      <meta itemprop="name" content="peiyouyao">
+      <meta itemprop="description" content="...">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Perry's">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Clash in Win, proxy in wsl
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-04-23 00:00:00" itemprop="dateCreated datePublished" datetime="2025-04-23T00:00:00+01:00">2025-04-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-12-17 01:19:24" itemprop="dateModified" datetime="2025-12-17T01:19:24+00:00">2025-12-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="🐧-使用-Clash-WSL-安装并配置-Docker-代理访问外网的完整指南"><a href="#🐧-使用-Clash-WSL-安装并配置-Docker-代理访问外网的完整指南" class="headerlink" title="🐧 使用 Clash + WSL 安装并配置 Docker 代理访问外网的完整指南"></a>🐧 使用 Clash + WSL 安装并配置 Docker 代理访问外网的完整指南</h1><blockquote>
+<p>本笔记记录了在 Windows 主机上使用 Clash 实现代理，并在 WSL 中配置代理环境与 Docker 访问 Docker Hub 的全过程。</p>
+</blockquote>
+<hr>
+<h2 id="🧱-系统环境"><a href="#🧱-系统环境" class="headerlink" title="🧱 系统环境"></a>🧱 系统环境</h2><ul>
+<li>Windows 主机已安装 <strong>Clash for Windows</strong>（英文版）</li>
+<li>使用 <strong>WSL2</strong>（Ubuntu 发行版）</li>
+<li>在 <strong>WSL 中独立安装了 Docker Engine</strong>（无 Docker Desktop）</li>
+</ul>
+<hr>
+<h2 id="📦-步骤一：Windows-上配置-Clash-for-Windows"><a href="#📦-步骤一：Windows-上配置-Clash-for-Windows" class="headerlink" title="📦 步骤一：Windows 上配置 Clash for Windows"></a>📦 步骤一：Windows 上配置 Clash for Windows</h2><h3 id="1-下载并安装-Clash-for-Windows"><a href="#1-下载并安装-Clash-for-Windows" class="headerlink" title="1. 下载并安装 Clash for Windows"></a>1. 下载并安装 Clash for Windows</h3><p>从 GitHub 下载最新版：<a target="_blank" rel="noopener" href="https://github.com/Fndroid/clash_for_windows_pkg">https://github.com/Fndroid/clash_for_windows_pkg</a></p>
+<h3 id="2-导入订阅配置"><a href="#2-导入订阅配置" class="headerlink" title="2. 导入订阅配置"></a>2. 导入订阅配置</h3><ul>
+<li>打开 Clash</li>
+<li>菜单栏点击 <strong>Profiles</strong></li>
+<li>点击 <code>Import</code> → <code>Subscription</code></li>
+<li>粘贴你的订阅链接 → 下载并激活</li>
+</ul>
+<h3 id="3-设置代理模式与端口"><a href="#3-设置代理模式与端口" class="headerlink" title="3. 设置代理模式与端口"></a>3. 设置代理模式与端口</h3><ul>
+<li>点击 <strong>General</strong> 标签页<ul>
+<li><code>Allow LAN</code>: ✅ 开启</li>
+<li><code>Mixed Port</code>: 默认 <code>7890</code>，保留</li>
+<li><code>Mode</code>: 推荐选 <strong>Global</strong>（全局代理）</li>
+<li><code>System Proxy</code>: 可选开关（影响 Windows 浏览器）</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="🌐-步骤二：在-WSL-中设置-Clash-代理"><a href="#🌐-步骤二：在-WSL-中设置-Clash-代理" class="headerlink" title="🌐 步骤二：在 WSL 中设置 Clash 代理"></a>🌐 步骤二：在 WSL 中设置 Clash 代理</h2><h3 id="1-添加以下函数到-bashrc"><a href="#1-添加以下函数到-bashrc" class="headerlink" title="1. 添加以下函数到 ~/.bashrc"></a>1. 添加以下函数到 <code>~/.bashrc</code></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取代理地址</span></span><br><span class="line"><span class="function"><span class="title">get_proxy_host</span></span>() &#123;</span><br><span class="line">  ip route | grep default | awk <span class="string">&#x27;&#123;print $3&#125;&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取代理端口（默认 7890，可通过 PROXY_PORT 环境变量覆盖）</span></span><br><span class="line"><span class="function"><span class="title">get_proxy_port</span></span>() &#123;</span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$&#123;PROXY_PORT:-7890&#125;</span>&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启用代理</span></span><br><span class="line"><span class="function"><span class="title">proxy_on</span></span>() &#123;</span><br><span class="line">  WIN_PROXY_HOST=$(get_proxy_host)</span><br><span class="line">  WIN_PROXY_PORT=$(get_proxy_port)</span><br><span class="line">  <span class="built_in">export</span> http_proxy=<span class="string">&quot;http://<span class="variable">$&#123;WIN_PROXY_HOST&#125;</span>:<span class="variable">$&#123;WIN_PROXY_PORT&#125;</span>&quot;</span></span><br><span class="line">  <span class="built_in">export</span> https_proxy=<span class="string">&quot;http://<span class="variable">$&#123;WIN_PROXY_HOST&#125;</span>:<span class="variable">$&#123;WIN_PROXY_PORT&#125;</span>&quot;</span></span><br><span class="line">  <span class="built_in">export</span> all_proxy=<span class="string">&quot;socks5://<span class="variable">$&#123;WIN_PROXY_HOST&#125;</span>:<span class="variable">$&#123;WIN_PROXY_PORT&#125;</span>&quot;</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;⚠️ Make sure Clash is running in Windows first.&quot;</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;✅ Proxy set to <span class="variable">$WIN_PROXY_HOST</span>:<span class="variable">$WIN_PROXY_PORT</span>&quot;</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;----------------------------------------&quot;</span></span><br><span class="line">  curl -s cip.cc || <span class="built_in">echo</span> <span class="string">&quot;❌ curl failed. Clash may not be running or port is blocked.&quot;</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;----------------------------------------&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭代理</span></span><br><span class="line"><span class="function"><span class="title">proxy_off</span></span>() &#123;</span><br><span class="line">  <span class="built_in">unset</span> http_proxy</span><br><span class="line">  <span class="built_in">unset</span> https_proxy</span><br><span class="line">  <span class="built_in">unset</span> all_proxy</span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;Proxy disabled&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-启用代理"><a href="#2-启用代理" class="headerlink" title="2. 启用代理"></a>2. 启用代理</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br><span class="line">proxy_on</span><br></pre></td></tr></table></figure>
+
+<p>确认返回 IP 地址为代理出口地址。</p>
+<hr>
+<h2 id="🐳-步骤三：在-WSL-中运行-Docker-并使用代理拉镜像"><a href="#🐳-步骤三：在-WSL-中运行-Docker-并使用代理拉镜像" class="headerlink" title="🐳 步骤三：在 WSL 中运行 Docker 并使用代理拉镜像"></a>🐳 步骤三：在 WSL 中运行 Docker 并使用代理拉镜像</h2><h3 id="情况：你未启用-systemd，需手动启动-Docker-Daemon"><a href="#情况：你未启用-systemd，需手动启动-Docker-Daemon" class="headerlink" title="情况：你未启用 systemd，需手动启动 Docker Daemon"></a>情况：你未启用 <code>systemd</code>，需手动启动 Docker Daemon</h3><h4 id="1-使用代理启动-Docker-Daemon："><a href="#1-使用代理启动-Docker-Daemon：" class="headerlink" title="1. 使用代理启动 Docker Daemon："></a>1. 使用代理启动 Docker Daemon：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">start_docker_with_proxy</span></span>() &#123;</span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;🚀 Starting Docker daemon with proxy...&quot;</span></span><br><span class="line">  WIN_PROXY_HOST=$(get_proxy_host)</span><br><span class="line">  WIN_PROXY_PORT=7890</span><br><span class="line">  <span class="built_in">sudo</span> HTTP_PROXY=http://<span class="variable">$&#123;WIN_PROXY_HOST&#125;</span>:<span class="variable">$&#123;WIN_PROXY_PORT&#125;</span> \</span><br><span class="line">       HTTPS_PROXY=http://<span class="variable">$&#123;WIN_PROXY_HOST&#125;</span>:<span class="variable">$&#123;WIN_PROXY_PORT&#125;</span> \</span><br><span class="line">       dockerd &gt; /tmp/dockerd.log 2&gt;&amp;1 &amp;</span><br><span class="line">  <span class="built_in">sleep</span> 2</span><br><span class="line">  docker info &gt; /dev/null 2&gt;&amp;1 &amp;&amp; <span class="built_in">echo</span> <span class="string">&quot;✅ Docker started&quot;</span> || <span class="built_in">echo</span> <span class="string">&quot;❌ Failed to start Docker&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-或使用非代理方式启动（适用于无需翻墙时）"><a href="#2-或使用非代理方式启动（适用于无需翻墙时）" class="headerlink" title="2. 或使用非代理方式启动（适用于无需翻墙时）"></a>2. 或使用非代理方式启动（适用于无需翻墙时）</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">start_docker</span></span>() &#123;</span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;🚀 Starting Docker daemon without proxy...&quot;</span></span><br><span class="line">  <span class="built_in">sudo</span> dockerd &gt; /tmp/dockerd.log 2&gt;&amp;1 &amp;</span><br><span class="line">  <span class="built_in">sleep</span> 2</span><br><span class="line">  docker info &gt; /dev/null 2&gt;&amp;1 &amp;&amp; <span class="built_in">echo</span> <span class="string">&quot;✅ Docker started&quot;</span> || <span class="built_in">echo</span> <span class="string">&quot;❌ Failed to start Docker&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-停止-Docker"><a href="#3-停止-Docker" class="headerlink" title="3. 停止 Docker"></a>3. 停止 Docker</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">stop_docker</span></span>() &#123;</span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;🛑 Stopping Docker daemon...&quot;</span></span><br><span class="line">  <span class="built_in">sudo</span> pkill dockerd &amp;&amp; <span class="built_in">echo</span> <span class="string">&quot;✅ Docker daemon stopped&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="📁-步骤四：使用-docker-compose-启动-Consul-服务"><a href="#📁-步骤四：使用-docker-compose-启动-Consul-服务" class="headerlink" title="📁 步骤四：使用 docker compose 启动 Consul 服务"></a>📁 步骤四：使用 <code>docker compose</code> 启动 Consul 服务</h2><h3 id="1-项目结构"><a href="#1-项目结构" class="headerlink" title="1. 项目结构"></a>1. 项目结构</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">~/code/projects/gorder/</span><br><span class="line">└── docker-compose.yml</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-示例-docker-compose-yml"><a href="#2-示例-docker-compose-yml" class="headerlink" title="2. 示例 docker-compose.yml"></a>2. 示例 <code>docker-compose.yml</code></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">version: <span class="string">&quot;3.9&quot;</span></span><br><span class="line">services:</span><br><span class="line">  consul:</span><br><span class="line">    image: hashicorp/consul</span><br><span class="line">    container_name: consul-server</span><br><span class="line">    <span class="built_in">command</span>: agent -server -ui -node=server-1 -bootstrap-expect=1 -client=0.0.0.0</span><br><span class="line">    ports:</span><br><span class="line">      - <span class="string">&quot;8500:8500&quot;</span></span><br><span class="line">      - <span class="string">&quot;8600:8600/udp&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-快捷函数或-alias-启动-Consul"><a href="#3-快捷函数或-alias-启动-Consul" class="headerlink" title="3. 快捷函数或 alias 启动 Consul"></a>3. 快捷函数或 alias 启动 Consul</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">start_consul</span></span>() &#123;</span><br><span class="line">  <span class="built_in">cd</span> ~/code/projects/gorder</span><br><span class="line">  docker compose up -d</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">alias</span> consulup=<span class="string">&#x27;cd ~/code/projects/gorder &amp;&amp; docker compose up -d&#x27;</span></span><br><span class="line"><span class="built_in">alias</span> consuldn=<span class="string">&#x27;cd ~/code/projects/gorder &amp;&amp; docker compose down&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="🔁-一键启动全流程（推荐顺序）"><a href="#🔁-一键启动全流程（推荐顺序）" class="headerlink" title="🔁 一键启动全流程（推荐顺序）"></a>🔁 一键启动全流程（推荐顺序）</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">proxy_on                     <span class="comment"># 开启 Clash 网络代理</span></span><br><span class="line">start_docker_with_proxy      <span class="comment"># 启动 Docker Daemon 使用代理</span></span><br><span class="line">start_consul                 <span class="comment"># 启动 Consul 服务</span></span><br></pre></td></tr></table></figure>
+
+<p>关闭时：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">consuldn                     <span class="comment"># 停止容器</span></span><br><span class="line">stop_docker                  <span class="comment"># 停止 Docker Daemon</span></span><br><span class="line">proxy_off                    <span class="comment"># 关闭代理</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="✅-常见问题"><a href="#✅-常见问题" class="headerlink" title="✅ 常见问题"></a>✅ 常见问题</h2><table>
+<thead>
+<tr>
+<th>问题</th>
+<th>原因</th>
+<th>解决方法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>curl</code> 能用但 <code>docker pull</code> 失败</td>
+<td>Docker daemon 没有使用代理</td>
+<td>用 <code>HTTP_PROXY=... dockerd</code> 启动</td>
+</tr>
+<tr>
+<td><code>127.0.0.1:7890</code> 无法连接</td>
+<td>WSL 的 localhost ≠ Windows localhost</td>
+<td>使用 <code>ip route</code> 获取宿主机地址</td>
+</tr>
+<tr>
+<td><code>docker compose</code> 找不到文件</td>
+<td>文件名应为 <code>docker-compose.yml</code></td>
+<td>使用标准命名或 <code>-f</code> 指定文件</td>
+</tr>
+<tr>
+<td><code>systemctl</code> 无法使用</td>
+<td>WSL 未启用 systemd</td>
+<td>添加 <code>/etc/wsl.conf</code> 并重启 WSL</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/wsl/" rel="tag"><i class="fa fa-tag"></i> wsl</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/04/23/tech/wsl2_docker_install_guide/" rel="prev" title="Install Docker in WSL2">
+      <i class="fa fa-chevron-left"></i> Install Docker in WSL2
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/05/20/tech/apidoc_in_microservice/" rel="next" title="Api Doc in Microservice Project">
+      Api Doc in Microservice Project <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%90%A7-%E4%BD%BF%E7%94%A8-Clash-WSL-%E5%AE%89%E8%A3%85%E5%B9%B6%E9%85%8D%E7%BD%AE-Docker-%E4%BB%A3%E7%90%86%E8%AE%BF%E9%97%AE%E5%A4%96%E7%BD%91%E7%9A%84%E5%AE%8C%E6%95%B4%E6%8C%87%E5%8D%97"><span class="nav-number">1.</span> <span class="nav-text">🐧 使用 Clash + WSL 安装并配置 Docker 代理访问外网的完整指南</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%A7%B1-%E7%B3%BB%E7%BB%9F%E7%8E%AF%E5%A2%83"><span class="nav-number">1.1.</span> <span class="nav-text">🧱 系统环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%A6-%E6%AD%A5%E9%AA%A4%E4%B8%80%EF%BC%9AWindows-%E4%B8%8A%E9%85%8D%E7%BD%AE-Clash-for-Windows"><span class="nav-number">1.2.</span> <span class="nav-text">📦 步骤一：Windows 上配置 Clash for Windows</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%B8%8B%E8%BD%BD%E5%B9%B6%E5%AE%89%E8%A3%85-Clash-for-Windows"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. 下载并安装 Clash for Windows</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%AF%BC%E5%85%A5%E8%AE%A2%E9%98%85%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.2.</span> <span class="nav-text">2. 导入订阅配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E4%B8%8E%E7%AB%AF%E5%8F%A3"><span class="nav-number">1.2.3.</span> <span class="nav-text">3. 设置代理模式与端口</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8C%90-%E6%AD%A5%E9%AA%A4%E4%BA%8C%EF%BC%9A%E5%9C%A8-WSL-%E4%B8%AD%E8%AE%BE%E7%BD%AE-Clash-%E4%BB%A3%E7%90%86"><span class="nav-number">1.3.</span> <span class="nav-text">🌐 步骤二：在 WSL 中设置 Clash 代理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%B7%BB%E5%8A%A0%E4%BB%A5%E4%B8%8B%E5%87%BD%E6%95%B0%E5%88%B0-bashrc"><span class="nav-number">1.3.1.</span> <span class="nav-text">1. 添加以下函数到 ~&#x2F;.bashrc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%90%AF%E7%94%A8%E4%BB%A3%E7%90%86"><span class="nav-number">1.3.2.</span> <span class="nav-text">2. 启用代理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%90%B3-%E6%AD%A5%E9%AA%A4%E4%B8%89%EF%BC%9A%E5%9C%A8-WSL-%E4%B8%AD%E8%BF%90%E8%A1%8C-Docker-%E5%B9%B6%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%90%86%E6%8B%89%E9%95%9C%E5%83%8F"><span class="nav-number">1.4.</span> <span class="nav-text">🐳 步骤三：在 WSL 中运行 Docker 并使用代理拉镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%83%85%E5%86%B5%EF%BC%9A%E4%BD%A0%E6%9C%AA%E5%90%AF%E7%94%A8-systemd%EF%BC%8C%E9%9C%80%E6%89%8B%E5%8A%A8%E5%90%AF%E5%8A%A8-Docker-Daemon"><span class="nav-number">1.4.1.</span> <span class="nav-text">情况：你未启用 systemd，需手动启动 Docker Daemon</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%90%86%E5%90%AF%E5%8A%A8-Docker-Daemon%EF%BC%9A"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">1. 使用代理启动 Docker Daemon：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%88%96%E4%BD%BF%E7%94%A8%E9%9D%9E%E4%BB%A3%E7%90%86%E6%96%B9%E5%BC%8F%E5%90%AF%E5%8A%A8%EF%BC%88%E9%80%82%E7%94%A8%E4%BA%8E%E6%97%A0%E9%9C%80%E7%BF%BB%E5%A2%99%E6%97%B6%EF%BC%89"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">2. 或使用非代理方式启动（适用于无需翻墙时）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%81%9C%E6%AD%A2-Docker"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">3. 停止 Docker</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%81-%E6%AD%A5%E9%AA%A4%E5%9B%9B%EF%BC%9A%E4%BD%BF%E7%94%A8-docker-compose-%E5%90%AF%E5%8A%A8-Consul-%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.5.</span> <span class="nav-text">📁 步骤四：使用 docker compose 启动 Consul 服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="nav-number">1.5.1.</span> <span class="nav-text">1. 项目结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E7%A4%BA%E4%BE%8B-docker-compose-yml"><span class="nav-number">1.5.2.</span> <span class="nav-text">2. 示例 docker-compose.yml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%BF%AB%E6%8D%B7%E5%87%BD%E6%95%B0%E6%88%96-alias-%E5%90%AF%E5%8A%A8-Consul"><span class="nav-number">1.5.3.</span> <span class="nav-text">3. 快捷函数或 alias 启动 Consul</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%94%81-%E4%B8%80%E9%94%AE%E5%90%AF%E5%8A%A8%E5%85%A8%E6%B5%81%E7%A8%8B%EF%BC%88%E6%8E%A8%E8%8D%90%E9%A1%BA%E5%BA%8F%EF%BC%89"><span class="nav-number">1.6.</span> <span class="nav-text">🔁 一键启动全流程（推荐顺序）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%85-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="nav-number">1.7.</span> <span class="nav-text">✅ 常见问题</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="peiyouyao"
+      src="https://avatars.githubusercontent.com/u/126999663?v=4">
+  <p class="site-author-name" itemprop="name">peiyouyao</p>
+  <div class="site-description" itemprop="description">...</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/peiyouyao" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;peiyouyao" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:peiyou-yao@outlook.com" title="E-Mail → mailto:peiyou-yao@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">peiyouyao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

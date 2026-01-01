@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="🐧 WSL 安装与配置笔记 ✅ 一、WSL 的安装与说明📌 为什么使用 WSL： 官方集成，资源轻，占用少，启动快 兼容大部分 Linux 命令、开发工具 支持 GUI（WSLg），可运行 Linux 图形程序 可直接访问 Windows 文件系统（&#x2F;mnt&#x2F;c&#x2F;...）  📦 安装命令（管理员 PowerShell）：1wsl --install  默认安装 Ubuntu（最新版）+ W">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WSL">
+<meta property="og:url" content="http://example.com/2025/04/12/tech/wsl/index.html">
+<meta property="og:site_name" content="Perry&#39;s">
+<meta property="og:description" content="🐧 WSL 安装与配置笔记 ✅ 一、WSL 的安装与说明📌 为什么使用 WSL： 官方集成，资源轻，占用少，启动快 兼容大部分 Linux 命令、开发工具 支持 GUI（WSLg），可运行 Linux 图形程序 可直接访问 Windows 文件系统（&#x2F;mnt&#x2F;c&#x2F;...）  📦 安装命令（管理员 PowerShell）：1wsl --install  默认安装 Ubuntu（最新版）+ W">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-04-11T23:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-17T01:19:24.975Z">
+<meta property="article:author" content="peiyouyao">
+<meta property="article:tag" content="wsl">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2025/04/12/tech/wsl/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>WSL | Perry's</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Perry's</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">tech / reading / muse / painting</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>Schedule</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/04/12/tech/wsl/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/126999663?v=4">
+      <meta itemprop="name" content="peiyouyao">
+      <meta itemprop="description" content="...">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Perry's">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          WSL
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-04-12 00:00:00" itemprop="dateCreated datePublished" datetime="2025-04-12T00:00:00+01:00">2025-04-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-12-17 01:19:24" itemprop="dateModified" datetime="2025-12-17T01:19:24+00:00">2025-12-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <hr>
+<h1 id="🐧-WSL-安装与配置笔记"><a href="#🐧-WSL-安装与配置笔记" class="headerlink" title="🐧 WSL 安装与配置笔记"></a>🐧 WSL 安装与配置笔记</h1><hr>
+<h2 id="✅-一、WSL-的安装与说明"><a href="#✅-一、WSL-的安装与说明" class="headerlink" title="✅ 一、WSL 的安装与说明"></a>✅ 一、WSL 的安装与说明</h2><h3 id="📌-为什么使用-WSL："><a href="#📌-为什么使用-WSL：" class="headerlink" title="📌 为什么使用 WSL："></a>📌 为什么使用 WSL：</h3><ul>
+<li>官方集成，资源轻，占用少，启动快</li>
+<li>兼容大部分 Linux 命令、开发工具</li>
+<li>支持 GUI（WSLg），可运行 Linux 图形程序</li>
+<li>可直接访问 Windows 文件系统（<code>/mnt/c/...</code>）</li>
+</ul>
+<h3 id="📦-安装命令（管理员-PowerShell）："><a href="#📦-安装命令（管理员-PowerShell）：" class="headerlink" title="📦 安装命令（管理员 PowerShell）："></a>📦 安装命令（管理员 PowerShell）：</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl <span class="literal">--install</span></span><br></pre></td></tr></table></figure>
+
+<p>默认安装 Ubuntu（最新版）+ WSL2 平台。</p>
+<hr>
+<h2 id="✅-二、安装-Ubuntu-虚拟机至-D-盘"><a href="#✅-二、安装-Ubuntu-虚拟机至-D-盘" class="headerlink" title="✅ 二、安装 Ubuntu 虚拟机至 D 盘"></a>✅ 二、安装 Ubuntu 虚拟机至 D 盘</h2><blockquote>
+<p>为节省空间，避免默认安装在 C:\Users\AppData</p>
+</blockquote>
+<h3 id="🧩-步骤："><a href="#🧩-步骤：" class="headerlink" title="🧩 步骤："></a>🧩 步骤：</h3><ol>
+<li>下载 Ubuntu Appx 安装包：<ul>
+<li><a target="_blank" rel="noopener" href="https://aka.ms/wslubuntu2004">https://aka.ms/wslubuntu2004</a></li>
+</ul>
+</li>
+<li>解压并手动注册：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将 .appx 改名为 .zip 并解压</span></span><br><span class="line">Rename-Item .\Ubuntu_*.appx ubuntu.zip</span><br><span class="line">Expand-Archive .\ubuntu.zip .\</span><br><span class="line">.\ubuntu.exe</span><br></pre></td></tr></table></figure>
+
+<p>设置用户名密码，即初始化成功。</p>
+<hr>
+<h2 id="✅-三、WSL-虚拟机初始化配置（推荐安装脚本）"><a href="#✅-三、WSL-虚拟机初始化配置（推荐安装脚本）" class="headerlink" title="✅ 三、WSL 虚拟机初始化配置（推荐安装脚本）"></a>✅ 三、WSL 虚拟机初始化配置（推荐安装脚本）</h2><h3 id="⚙️-更新-基础工具安装："><a href="#⚙️-更新-基础工具安装：" class="headerlink" title="⚙️ 更新 &amp; 基础工具安装："></a>⚙️ 更新 &amp; 基础工具安装：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update &amp;&amp; <span class="built_in">sudo</span> apt upgrade -y</span><br><span class="line"><span class="built_in">sudo</span> apt install -y git curl wget unzip vim net-tools htop</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="✅-四、Git-SSH-配置"><a href="#✅-四、Git-SSH-配置" class="headerlink" title="✅ 四、Git + SSH 配置"></a>✅ 四、Git + SSH 配置</h2><h3 id="1️⃣-Git-安装与全局配置："><a href="#1️⃣-Git-安装与全局配置：" class="headerlink" title="1️⃣ Git 安装与全局配置："></a>1️⃣ Git 安装与全局配置：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install git -y</span><br><span class="line"></span><br><span class="line">git config --global user.name <span class="string">&quot;xxx&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;your_email@example.com&quot;</span></span><br><span class="line">git config --global core.editor <span class="string">&quot;vim&quot;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="2️⃣-SSH-密钥生成与配置："><a href="#2️⃣-SSH-密钥生成与配置：" class="headerlink" title="2️⃣ SSH 密钥生成与配置："></a>2️⃣ SSH 密钥生成与配置：</h3><h4 id="生成-SSH-密钥（本地和-WSL-各自生成）："><a href="#生成-SSH-密钥（本地和-WSL-各自生成）：" class="headerlink" title="生成 SSH 密钥（本地和 WSL 各自生成）："></a>生成 SSH 密钥（本地和 WSL 各自生成）：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t ed25519 -C <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>按提示一路回车，默认保存在：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">~/.ssh/id_ed25519</span><br><span class="line">~/.ssh/id_ed25519.pub</span><br></pre></td></tr></table></figure>
+
+<h4 id="将公钥添加到-GitHub："><a href="#将公钥添加到-GitHub：" class="headerlink" title="将公钥添加到 GitHub："></a>将公钥添加到 GitHub：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> ~/.ssh/id_ed25519.pub</span><br></pre></td></tr></table></figure>
+
+<p>复制粘贴至 GitHub → <code>Settings &gt; SSH and GPG Keys &gt; New Key</code></p>
+<hr>
+<h3 id="3️⃣-在-Windows-主机配置-SSH-连接-Ubuntu-虚拟机"><a href="#3️⃣-在-Windows-主机配置-SSH-连接-Ubuntu-虚拟机" class="headerlink" title="3️⃣ 在 Windows 主机配置 SSH 连接 Ubuntu 虚拟机"></a>3️⃣ 在 Windows 主机配置 SSH 连接 Ubuntu 虚拟机</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 编辑 C:\Users\&lt;你&gt;\.ssh\config</span></span><br><span class="line">Host ubuntu-wsl</span><br><span class="line">    HostName 172.27.xxx.xxx         <span class="comment"># 用 `ip addr show eth0` 获取</span></span><br><span class="line">    User ypy</span><br><span class="line">    IdentityFile C:/Users/&lt;你&gt;/.ssh/id_ed25519</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="✅-五、远程-VSCode-开发推荐做法"><a href="#✅-五、远程-VSCode-开发推荐做法" class="headerlink" title="✅ 五、远程 VSCode 开发推荐做法"></a>✅ 五、远程 VSCode 开发推荐做法</h2><ul>
+<li>安装 VSCode</li>
+<li>安装扩展：<code>Remote - SSH</code> + <code>WSL</code></li>
+<li>用 <code>ssh ubuntu-wsl</code> 测试连接</li>
+<li>成功连接后，使用 VSCode 的 Remote SSH 自动同步开发环境</li>
+</ul>
+<hr>
+<h2 id="✅-六、SSH-服务启动命令（不使用-systemctl）"><a href="#✅-六、SSH-服务启动命令（不使用-systemctl）" class="headerlink" title="✅ 六、SSH 服务启动命令（不使用 systemctl）"></a>✅ 六、SSH 服务启动命令（不使用 systemctl）</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install openssh-server -y</span><br><span class="line"><span class="built_in">sudo</span> service ssh start    <span class="comment"># 启动 sshd</span></span><br><span class="line">ps -ef | grep sshd        <span class="comment"># 查看服务状态</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="📁-附：常用路径小抄"><a href="#📁-附：常用路径小抄" class="headerlink" title="📁 附：常用路径小抄"></a>📁 附：常用路径小抄</h2><table>
+<thead>
+<tr>
+<th>路径</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>~/.ssh/authorized_keys</code></td>
+<td>存储允许登录的公钥</td>
+</tr>
+<tr>
+<td><code>/mnt/c/...</code></td>
+<td>访问 Windows C 盘</td>
+</tr>
+<tr>
+<td><code>\\wsl$\Ubuntu</code></td>
+<td>Windows 访问 Linux 文件系统</td>
+</tr>
+<tr>
+<td><code>~/WorkStation/...</code></td>
+<td>你的开发工作区目录</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/wsl/" rel="tag"><i class="fa fa-tag"></i> wsl</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/02/01/tech/rpc/" rel="prev" title="PyRPC Framework">
+      <i class="fa fa-chevron-left"></i> PyRPC Framework
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/04/12/tech/vmware/" rel="next" title="VMware">
+      VMware <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%90%A7-WSL-%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE%E7%AC%94%E8%AE%B0"><span class="nav-number">1.</span> <span class="nav-text">🐧 WSL 安装与配置笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%85-%E4%B8%80%E3%80%81WSL-%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E8%AF%B4%E6%98%8E"><span class="nav-number">1.1.</span> <span class="nav-text">✅ 一、WSL 的安装与说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%93%8C-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8-WSL%EF%BC%9A"><span class="nav-number">1.1.1.</span> <span class="nav-text">📌 为什么使用 WSL：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%93%A6-%E5%AE%89%E8%A3%85%E5%91%BD%E4%BB%A4%EF%BC%88%E7%AE%A1%E7%90%86%E5%91%98-PowerShell%EF%BC%89%EF%BC%9A"><span class="nav-number">1.1.2.</span> <span class="nav-text">📦 安装命令（管理员 PowerShell）：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%85-%E4%BA%8C%E3%80%81%E5%AE%89%E8%A3%85-Ubuntu-%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%87%B3-D-%E7%9B%98"><span class="nav-number">1.2.</span> <span class="nav-text">✅ 二、安装 Ubuntu 虚拟机至 D 盘</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%A7%A9-%E6%AD%A5%E9%AA%A4%EF%BC%9A"><span class="nav-number">1.2.1.</span> <span class="nav-text">🧩 步骤：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%85-%E4%B8%89%E3%80%81WSL-%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%88%9D%E5%A7%8B%E5%8C%96%E9%85%8D%E7%BD%AE%EF%BC%88%E6%8E%A8%E8%8D%90%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">✅ 三、WSL 虚拟机初始化配置（推荐安装脚本）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9A%99%EF%B8%8F-%E6%9B%B4%E6%96%B0-%E5%9F%BA%E7%A1%80%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85%EF%BC%9A"><span class="nav-number">1.3.1.</span> <span class="nav-text">⚙️ 更新 &amp; 基础工具安装：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%85-%E5%9B%9B%E3%80%81Git-SSH-%E9%85%8D%E7%BD%AE"><span class="nav-number">1.4.</span> <span class="nav-text">✅ 四、Git + SSH 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%EF%B8%8F%E2%83%A3-Git-%E5%AE%89%E8%A3%85%E4%B8%8E%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE%EF%BC%9A"><span class="nav-number">1.4.1.</span> <span class="nav-text">1️⃣ Git 安装与全局配置：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%EF%B8%8F%E2%83%A3-SSH-%E5%AF%86%E9%92%A5%E7%94%9F%E6%88%90%E4%B8%8E%E9%85%8D%E7%BD%AE%EF%BC%9A"><span class="nav-number">1.4.2.</span> <span class="nav-text">2️⃣ SSH 密钥生成与配置：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%9F%E6%88%90-SSH-%E5%AF%86%E9%92%A5%EF%BC%88%E6%9C%AC%E5%9C%B0%E5%92%8C-WSL-%E5%90%84%E8%87%AA%E7%94%9F%E6%88%90%EF%BC%89%EF%BC%9A"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">生成 SSH 密钥（本地和 WSL 各自生成）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%86%E5%85%AC%E9%92%A5%E6%B7%BB%E5%8A%A0%E5%88%B0-GitHub%EF%BC%9A"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">将公钥添加到 GitHub：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%EF%B8%8F%E2%83%A3-%E5%9C%A8-Windows-%E4%B8%BB%E6%9C%BA%E9%85%8D%E7%BD%AE-SSH-%E8%BF%9E%E6%8E%A5-Ubuntu-%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="nav-number">1.4.3.</span> <span class="nav-text">3️⃣ 在 Windows 主机配置 SSH 连接 Ubuntu 虚拟机</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%85-%E4%BA%94%E3%80%81%E8%BF%9C%E7%A8%8B-VSCode-%E5%BC%80%E5%8F%91%E6%8E%A8%E8%8D%90%E5%81%9A%E6%B3%95"><span class="nav-number">1.5.</span> <span class="nav-text">✅ 五、远程 VSCode 开发推荐做法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%85-%E5%85%AD%E3%80%81SSH-%E6%9C%8D%E5%8A%A1%E5%90%AF%E5%8A%A8%E5%91%BD%E4%BB%A4%EF%BC%88%E4%B8%8D%E4%BD%BF%E7%94%A8-systemctl%EF%BC%89"><span class="nav-number">1.6.</span> <span class="nav-text">✅ 六、SSH 服务启动命令（不使用 systemctl）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%81-%E9%99%84%EF%BC%9A%E5%B8%B8%E7%94%A8%E8%B7%AF%E5%BE%84%E5%B0%8F%E6%8A%84"><span class="nav-number">1.7.</span> <span class="nav-text">📁 附：常用路径小抄</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="peiyouyao"
+      src="https://avatars.githubusercontent.com/u/126999663?v=4">
+  <p class="site-author-name" itemprop="name">peiyouyao</p>
+  <div class="site-description" itemprop="description">...</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/peiyouyao" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;peiyouyao" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:peiyou-yao@outlook.com" title="E-Mail → mailto:peiyou-yao@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">peiyouyao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

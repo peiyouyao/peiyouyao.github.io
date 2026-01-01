@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="MyRustRust 优秀的签名设计 我注意到一个写代码中的问题:  例如 int[] plusOne(int[] arr) 这个函数签名无法确保程序员是在 arr 上原地修改的, 还是把arr clone 了一份 而rust 则可以通过对函数签名的要求明确表示出这一点 例如 123fn plus_one(arr: Vec&lt;i32&gt;) -&gt; Vec&lt;i32&gt; &#x2F;&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="My Rust">
+<meta property="og:url" content="http://example.com/2024/11/01/lang/rust/index.html">
+<meta property="og:site_name" content="Perry&#39;s">
+<meta property="og:description" content="MyRustRust 优秀的签名设计 我注意到一个写代码中的问题:  例如 int[] plusOne(int[] arr) 这个函数签名无法确保程序员是在 arr 上原地修改的, 还是把arr clone 了一份 而rust 则可以通过对函数签名的要求明确表示出这一点 例如 123fn plus_one(arr: Vec&lt;i32&gt;) -&gt; Vec&lt;i32&gt; &#x2F;&#x2F;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-11-01T00:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-17T01:19:24.903Z">
+<meta property="article:author" content="peiyouyao">
+<meta property="article:tag" content="rust">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2024/11/01/lang/rust/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>My Rust | Perry's</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Perry's</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">tech / reading / muse / painting</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>Schedule</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/01/lang/rust/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/126999663?v=4">
+      <meta itemprop="name" content="peiyouyao">
+      <meta itemprop="description" content="...">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Perry's">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          My Rust
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-11-01 00:00:00" itemprop="dateCreated datePublished" datetime="2024-11-01T00:00:00+00:00">2024-11-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-12-17 01:19:24" itemprop="dateModified" datetime="2025-12-17T01:19:24+00:00">2025-12-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/lang/" itemprop="url" rel="index"><span itemprop="name">lang</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <hr>
+<h1 id="MyRust"><a href="#MyRust" class="headerlink" title="MyRust"></a>MyRust</h1><h2 id="Rust-优秀的签名设计"><a href="#Rust-优秀的签名设计" class="headerlink" title="Rust 优秀的签名设计"></a>Rust 优秀的签名设计</h2><blockquote>
+<p>我注意到一个写代码中的问题: </p>
+<p>例如 <code>int[] plusOne(int[] arr)</code> 这个函数签名无法确保程序员是在 arr 上原地修改的, 还是把arr clone 了一份</p>
+<p>而rust 则可以通过对函数签名的要求明确表示出这一点</p>
+<p>例如</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">plus_one</span>(arr: <span class="type">Vec</span>&lt;<span class="type">i32</span>&gt;) <span class="punctuation">-&gt;</span> <span class="type">Vec</span>&lt;<span class="type">i32</span>&gt; <span class="comment">// arr 走出函数便不再可用` </span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">plus_one</span>(arr: &amp;<span class="type">Vec</span>&lt;<span class="type">i32</span>&gt;) <span class="punctuation">-&gt;</span> <span class="type">Vec</span>&lt;<span class="type">i32</span>&gt;` </span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">plus_one</span>(arr: &amp;<span class="keyword">mut</span> <span class="type">Vec</span>&lt;<span class="type">i32</span>&gt;)`</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><strong>Rust 函数签名设计的一个核心优势</strong>：<strong>通过函数签名清晰表达了数据的所有权、借用和修改关系</strong>。</p>
+<p>在很多语言（如 C++、Java）中，<strong>无法仅通过函数签名来判断</strong>一个数组（或列表）是否是<strong>原地修改的</strong>，<strong>还是克隆了一份新数组</strong>。但在 Rust 中，<strong>函数签名本身就明确了这一点</strong>，因为 Rust 强制要求开发者<strong>显式声明所有权和可变性</strong>。</p>
+<p>Rust 三权分立: 所有权, 读权, 写权</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[derive(PartialEq, Eq, Clone, Debug)]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">struct</span> <span class="title class_">ListNode</span> &#123;</span><br><span class="line">    <span class="keyword">pub</span> val: <span class="type">i32</span>,</span><br><span class="line">    <span class="keyword">pub</span> next: <span class="type">Option</span>&lt;<span class="type">Box</span>&lt;ListNode&gt;&gt;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> <span class="title class_">ListNode</span> &#123;</span><br><span class="line">    <span class="keyword">pub</span> <span class="keyword">fn</span> <span class="title function_">new</span>(val: <span class="type">i32</span>) <span class="punctuation">-&gt;</span> <span class="keyword">Self</span> &#123;</span><br><span class="line">        ListNode &#123; val, next: <span class="literal">None</span> &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">fn</span> <span class="title function_">add_one_node</span>(head: &amp;<span class="keyword">mut</span> <span class="type">Option</span>&lt;<span class="type">Box</span>&lt;ListNode&gt;&gt;, value: <span class="type">i32</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">p</span>: &amp;<span class="keyword">mut</span> <span class="type">Option</span>&lt;<span class="type">Box</span>&lt;ListNode&gt;&gt; = head; <span class="comment">// p 是 head 的可变引用</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">let</span> <span class="variable">Some</span>(node) = p &#123;</span><br><span class="line">        p = &amp;<span class="keyword">mut</span> node.next; <span class="comment">// 不断向链表尾部移动</span></span><br><span class="line">    &#125;</span><br><span class="line">    *p = <span class="title function_ invoke__">Some</span>(<span class="type">Box</span>::<span class="title function_ invoke__">new</span>(ListNode::<span class="title function_ invoke__">new</span>(value))); <span class="comment">// 在尾部插入新节点</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">fn</span> <span class="title function_">show_list</span>(head: &amp;<span class="type">Option</span>&lt;<span class="type">Box</span>&lt;ListNode&gt;&gt;) &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">p</span>: &amp;<span class="type">Option</span>&lt;<span class="type">Box</span>&lt;ListNode&gt;&gt; = head; <span class="comment">// p 是 &amp;Option&lt;Box&lt;ListNode&gt;&gt;</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">let</span> <span class="variable">Some</span>(node) = p &#123;</span><br><span class="line">        <span class="built_in">print!</span>(<span class="string">&quot;&#123;&#125; -&gt; &quot;</span>, node.val); <span class="comment">// 打印当前节点的值</span></span><br><span class="line">        p = &amp;node.next; <span class="comment">// 向下一个节点移动，p 的类型是 &amp;Option&lt;Box&lt;ListNode&gt;&gt;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;None&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">head</span>: <span class="type">Option</span>&lt;<span class="type">Box</span>&lt;ListNode&gt;&gt; = <span class="title function_ invoke__">Some</span>(<span class="type">Box</span>::<span class="title function_ invoke__">new</span>(ListNode::<span class="title function_ invoke__">new</span>(<span class="number">1</span>)));</span><br><span class="line">    <span class="title function_ invoke__">add_one_node</span>(&amp;<span class="keyword">mut</span> head, <span class="number">2</span>);</span><br><span class="line">    <span class="title function_ invoke__">add_one_node</span>(&amp;<span class="keyword">mut</span> head, <span class="number">3</span>);</span><br><span class="line">    <span class="title function_ invoke__">add_one_node</span>(&amp;<span class="keyword">mut</span> head, <span class="number">4</span>); <span class="comment">// 1 -&gt; 2 -&gt; 3 -&gt; 4</span></span><br><span class="line">    <span class="title function_ invoke__">show_list</span>(&amp;head);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Tip-for-x-in-y"><a href="#Tip-for-x-in-y" class="headerlink" title="Tip: for x in y"></a>Tip: <code>for x in y</code></h2><table>
+<thead>
+<tr>
+<th><code>y</code> 类型</th>
+<th>调用的迭代器</th>
+<th><code>x</code> 的类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Vec&lt;T&gt;</code></td>
+<td><code>.into_iter()</code></td>
+<td><code>T</code></td>
+<td>消耗集合，转移所有权</td>
+</tr>
+<tr>
+<td><code>&amp;Vec&lt;T&gt;</code></td>
+<td><code>.iter()</code></td>
+<td><code>&amp;T</code></td>
+<td>不可变引用迭代器，不消耗集合</td>
+</tr>
+<tr>
+<td><code>&amp;mut Vec&lt;T&gt;</code></td>
+<td><code>.iter_mut()</code></td>
+<td><code>&amp;mut T</code></td>
+<td>可变引用迭代器，允许修改集合</td>
+</tr>
+<tr>
+<td><code>[T; N]</code></td>
+<td><code>.iter()</code></td>
+<td><code>&amp;T</code></td>
+<td>固定数组转为切片的不可变引用</td>
+</tr>
+<tr>
+<td><code>&amp;[T]</code></td>
+<td><code>.iter()</code></td>
+<td><code>&amp;T</code></td>
+<td>切片的不可变引用</td>
+</tr>
+<tr>
+<td><code>&amp;mut [T]</code></td>
+<td><code>.iter_mut()</code></td>
+<td><code>&amp;mut T</code></td>
+<td>切片的可变引用</td>
+</tr>
+</tbody></table>
+<p>通过这些规则，可以根据 <code>y</code> 的类型快速判断 <code>x</code> 的类型，以及是否发生所有权转移！</p>
+<h2 id="Tip-let-Some-x-y"><a href="#Tip-let-Some-x-y" class="headerlink" title="Tip: let Some(x) = y"></a>Tip: <code>let Some(x) = y</code></h2><table>
+<thead>
+<tr>
+<th>Y Type</th>
+<th>X Type</th>
+<th>equals</th>
+<th>DEsc</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Option&lt;T&gt;</code></td>
+<td><code>T</code></td>
+<td><code>x = y.unwrap()</code></td>
+<td>x 会取得数据的所有权</td>
+</tr>
+<tr>
+<td><code>&amp;Option&lt;T&gt;</code></td>
+<td><code>&amp;T</code></td>
+<td><code>x = y.as_ref().unwrap()</code></td>
+<td>x 只是读借用, 不会取得所有权</td>
+</tr>
+<tr>
+<td><code>&amp;mut Option&lt;T&gt;</code></td>
+<td><code>&amp;mut T</code></td>
+<td><code>x = y.as_mut().unwrap()</code></td>
+<td>x 是写借用, 不会取得所有权</td>
+</tr>
+</tbody></table>
+<p>特别地</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">当 y: Option&lt;T&gt;</span><br><span class="line">while let Some(x) = &amp;y =&gt; x: &amp;T</span><br><span class="line">if let Some(x) = &amp;mut y =&gt; x: &amp;mut T</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/rust/" rel="tag"><i class="fa fa-tag"></i> rust</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/05/04/tech/mysql/" rel="prev" title="MySQL">
+      <i class="fa fa-chevron-left"></i> MySQL
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/02/01/tech/rpc/" rel="next" title="PyRPC Framework">
+      PyRPC Framework <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MyRust"><span class="nav-number">1.</span> <span class="nav-text">MyRust</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Rust-%E4%BC%98%E7%A7%80%E7%9A%84%E7%AD%BE%E5%90%8D%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.1.</span> <span class="nav-text">Rust 优秀的签名设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tip-for-x-in-y"><span class="nav-number">1.2.</span> <span class="nav-text">Tip: for x in y</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tip-let-Some-x-y"><span class="nav-number">1.3.</span> <span class="nav-text">Tip: let Some(x) &#x3D; y</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="peiyouyao"
+      src="https://avatars.githubusercontent.com/u/126999663?v=4">
+  <p class="site-author-name" itemprop="name">peiyouyao</p>
+  <div class="site-description" itemprop="description">...</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/peiyouyao" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;peiyouyao" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:peiyou-yao@outlook.com" title="E-Mail → mailto:peiyou-yao@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">peiyouyao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

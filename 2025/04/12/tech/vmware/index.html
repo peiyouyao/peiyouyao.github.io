@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="🧱 一、安装虚拟机你选择使用 VMware Workstation Pro（现已免费），作为运行虚拟系统的工具：  ✅ VMware 是一个功能全面的虚拟机管理平台 ✅ 支持安装在 D 盘（你已经完成） ✅ 虚拟系统（如 Ubuntu）的镜像和文件可以独立放置（如 D:\VMs\Ubuntu18-dev） ✅ 成功从 Ubuntu Releases 下载并使用 ISO 安装 Ubuntu 18">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VMware">
+<meta property="og:url" content="http://example.com/2025/04/12/tech/vmware/index.html">
+<meta property="og:site_name" content="Perry&#39;s">
+<meta property="og:description" content="🧱 一、安装虚拟机你选择使用 VMware Workstation Pro（现已免费），作为运行虚拟系统的工具：  ✅ VMware 是一个功能全面的虚拟机管理平台 ✅ 支持安装在 D 盘（你已经完成） ✅ 虚拟系统（如 Ubuntu）的镜像和文件可以独立放置（如 D:\VMs\Ubuntu18-dev） ✅ 成功从 Ubuntu Releases 下载并使用 ISO 安装 Ubuntu 18">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-04-11T23:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-17T01:19:24.967Z">
+<meta property="article:author" content="peiyouyao">
+<meta property="article:tag" content="vmware">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2025/04/12/tech/vmware/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>VMware | Perry's</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Perry's</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">tech / reading / muse / painting</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>Schedule</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/04/12/tech/vmware/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/126999663?v=4">
+      <meta itemprop="name" content="peiyouyao">
+      <meta itemprop="description" content="...">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Perry's">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          VMware
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-04-12 00:00:00" itemprop="dateCreated datePublished" datetime="2025-04-12T00:00:00+01:00">2025-04-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-12-17 01:19:24" itemprop="dateModified" datetime="2025-12-17T01:19:24+00:00">2025-12-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <hr>
+<h2 id="🧱-一、安装虚拟机"><a href="#🧱-一、安装虚拟机" class="headerlink" title="🧱 一、安装虚拟机"></a>🧱 一、安装虚拟机</h2><p>你选择使用 <strong>VMware Workstation Pro</strong>（现已免费），作为运行虚拟系统的工具：</p>
+<ul>
+<li>✅ VMware 是一个功能全面的虚拟机管理平台</li>
+<li>✅ 支持安装在 D 盘（你已经完成）</li>
+<li>✅ 虚拟系统（如 Ubuntu）的镜像和文件可以独立放置（如 D:\VMs\Ubuntu18-dev）</li>
+<li>✅ 成功从 <a target="_blank" rel="noopener" href="https://releases.ubuntu.com/">Ubuntu Releases</a> 下载并使用 ISO 安装 Ubuntu 18.04</li>
+</ul>
+<hr>
+<h2 id="⚙️-二、虚拟机配置"><a href="#⚙️-二、虚拟机配置" class="headerlink" title="⚙️ 二、虚拟机配置"></a>⚙️ 二、虚拟机配置</h2><p>你完成并了解了以下配置操作：</p>
+<ul>
+<li>✅ 安装 Ubuntu 18.04 系统，并了解虚拟硬件（CPU、内存、磁盘等）配置建议：<ul>
+<li>你本机为 8 核，虚拟机分配 2~4 核较为合理</li>
+</ul>
+</li>
+<li>✅ 安装 VMware Tools，实现分辨率自适应、拖拽复制、共享剪贴板等</li>
+<li>✅ 学会使用 GUI 设置图标大小、启用 fractional scaling 改变 UI 缩放比例</li>
+<li>✅ 学会安全关机和修改虚拟机 CPU 配置（需关机后设置）</li>
+</ul>
+<hr>
+<h2 id="👤-三、Linux-系统用户问题"><a href="#👤-三、Linux-系统用户问题" class="headerlink" title="👤 三、Linux 系统用户问题"></a>👤 三、Linux 系统用户问题</h2><p>你提出了非常核心的问题，理解了 Linux 与 Windows 在用户管理上的差异：</p>
+<ul>
+<li>✅ 每个用户都有独立的 home 目录（如 <code>/home/ypy</code>）</li>
+<li>✅ 普通用户需使用 <code>sudo</code> 来执行系统级任务（如安装软件）</li>
+<li>✅ root 是最高权限用户，但 Ubuntu 默认禁用 root 密码，推荐使用 <code>sudo -i</code> 进入 root shell</li>
+<li>✅ 使用 <code>whoami</code>, <code>id</code>, <code>cat /etc/passwd</code> 来查看用户信息</li>
+<li>✅ 软件安装通常是“全局一次安装，所有用户共享”，非每人安装一份</li>
+</ul>
+<hr>
+<h2 id="📁-四、Linux-系统常用（重要）文件夹"><a href="#📁-四、Linux-系统常用（重要）文件夹" class="headerlink" title="📁 四、Linux 系统常用（重要）文件夹"></a>📁 四、Linux 系统常用（重要）文件夹</h2><p>你复习并理解了 Linux 文件系统的树状结构，以 <code>/</code> 为根：</p>
+<table>
+<thead>
+<tr>
+<th>目录</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/home</code></td>
+<td>用户主目录，开发者日常使用区域</td>
+</tr>
+<tr>
+<td><code>/usr/bin</code></td>
+<td>可执行程序位置</td>
+</tr>
+<tr>
+<td><code>/etc</code></td>
+<td>配置文件位置</td>
+</tr>
+<tr>
+<td><code>/var/lib</code></td>
+<td>应用数据（如数据库）</td>
+</tr>
+<tr>
+<td><code>/tmp</code></td>
+<td>临时文件</td>
+</tr>
+<tr>
+<td><code>/root</code></td>
+<td>root 用户的 home 目录</td>
+</tr>
+<tr>
+<td><code>/opt</code></td>
+<td>可选安装目录（第三方程序）</td>
+</tr>
+</tbody></table>
+<p>你也学会了在 <strong>图形界面中访问根目录</strong>（点击“其他位置” → “Computer”）。</p>
+<hr>
+<h2 id="🧰-五、Linux-安装软件问题"><a href="#🧰-五、Linux-安装软件问题" class="headerlink" title="🧰 五、Linux 安装软件问题"></a>🧰 五、Linux 安装软件问题</h2><p>你非常深入地探讨了 Ubuntu 如何避免 Windows 中“卸载不干净”的问题，并理解了：</p>
+<ul>
+<li><p>✅ Ubuntu 使用 <code>apt</code> 包管理器进行软件安装与卸载</p>
+</li>
+<li><p>✅ 所有程序会统一装入标准目录（无乱放、无注册表）</p>
+</li>
+<li><p>✅ 卸载软件可以使用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt remove 软件名      <span class="comment"># 卸载程序但保留配置</span></span><br><span class="line"><span class="built_in">sudo</span> apt purge 软件名       <span class="comment"># 连配置一并清除</span></span><br><span class="line"><span class="built_in">sudo</span> apt autoremove         <span class="comment"># 清除无用依赖</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>✅ 你亲手完成了：</p>
+<ul>
+<li>卸载 Firefox</li>
+<li>安装 Google Chrome（通过官网 <code>.deb</code> 安装包或 <code>wget + dpkg</code>）</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="🔧-六、配置-Git（连接-GitHub）"><a href="#🔧-六、配置-Git（连接-GitHub）" class="headerlink" title="🔧 六、配置 Git（连接 GitHub）"></a>🔧 六、配置 Git（连接 GitHub）</h2><p>你理解了远程开发中 Git 的重要性，并在虚拟机中完成了以下配置：</p>
+<ul>
+<li><p>✅ 安装 Git：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install git</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>✅ 设置 Git 用户信息（提交用）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;peiyouyao&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;peiyouyao@gmail.com&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>✅ 生成 SSH 密钥对（ed25519），用于连接 GitHub：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t ed25519 -C <span class="string">&quot;你的邮箱&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>✅ 成功将公钥添加到 GitHub（Settings → SSH Keys）</p>
+</li>
+<li><p>✅ 测试连接成功：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>✅ 支持在虚拟机中使用 SSH 克隆、提交、推送 GitHub 仓库</p>
+</li>
+</ul>
+<h2 id="安装SSH服务"><a href="#安装SSH服务" class="headerlink" title="安装SSH服务"></a>安装SSH服务</h2><table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>命令（在虚拟机中）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>检查 IP</td>
+<td><code>ip a</code></td>
+</tr>
+<tr>
+<td>安装 SSH 服务</td>
+<td><code>sudo apt install openssh-server</code></td>
+</tr>
+<tr>
+<td>启动服务</td>
+<td><code>sudo systemctl start ssh</code></td>
+</tr>
+<tr>
+<td>设置开机启动</td>
+<td><code>sudo systemctl enable ssh</code></td>
+</tr>
+<tr>
+<td>检查状态</td>
+<td><code>sudo systemctl status ssh</code></td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/vmware/" rel="tag"><i class="fa fa-tag"></i> vmware</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/04/12/tech/wsl/" rel="prev" title="WSL">
+      <i class="fa fa-chevron-left"></i> WSL
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/04/12/tech/linux/" rel="next" title="Linux Common Operations">
+      Linux Common Operations <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%A7%B1-%E4%B8%80%E3%80%81%E5%AE%89%E8%A3%85%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="nav-number">1.</span> <span class="nav-text">🧱 一、安装虚拟机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9A%99%EF%B8%8F-%E4%BA%8C%E3%80%81%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">⚙️ 二、虚拟机配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%91%A4-%E4%B8%89%E3%80%81Linux-%E7%B3%BB%E7%BB%9F%E7%94%A8%E6%88%B7%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">👤 三、Linux 系统用户问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%81-%E5%9B%9B%E3%80%81Linux-%E7%B3%BB%E7%BB%9F%E5%B8%B8%E7%94%A8%EF%BC%88%E9%87%8D%E8%A6%81%EF%BC%89%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">4.</span> <span class="nav-text">📁 四、Linux 系统常用（重要）文件夹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%A7%B0-%E4%BA%94%E3%80%81Linux-%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E9%97%AE%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text">🧰 五、Linux 安装软件问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%94%A7-%E5%85%AD%E3%80%81%E9%85%8D%E7%BD%AE-Git%EF%BC%88%E8%BF%9E%E6%8E%A5-GitHub%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">🔧 六、配置 Git（连接 GitHub）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85SSH%E6%9C%8D%E5%8A%A1"><span class="nav-number">7.</span> <span class="nav-text">安装SSH服务</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="peiyouyao"
+      src="https://avatars.githubusercontent.com/u/126999663?v=4">
+  <p class="site-author-name" itemprop="name">peiyouyao</p>
+  <div class="site-description" itemprop="description">...</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/peiyouyao" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;peiyouyao" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:peiyou-yao@outlook.com" title="E-Mail → mailto:peiyou-yao@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">peiyouyao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

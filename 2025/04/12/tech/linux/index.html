@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="🐧 Linux 常见操作对照手册（类比 Windows 系统） 本文旨在帮助熟悉 Windows 系统的用户快速掌握 Linux 中的常用系统操作，同时补充常用命令的含义便于记忆。   🧠 基础信息查看查看当前用户名（whoami → who am i）1whoami  # 显示当前登录用户（who am I）  查看当前所在路径（pwd → print working directory）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux Common Operations">
+<meta property="og:url" content="http://example.com/2025/04/12/tech/linux/index.html">
+<meta property="og:site_name" content="Perry&#39;s">
+<meta property="og:description" content="🐧 Linux 常见操作对照手册（类比 Windows 系统） 本文旨在帮助熟悉 Windows 系统的用户快速掌握 Linux 中的常用系统操作，同时补充常用命令的含义便于记忆。   🧠 基础信息查看查看当前用户名（whoami → who am i）1whoami  # 显示当前登录用户（who am I）  查看当前所在路径（pwd → print working directory）">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-04-11T23:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-17T01:19:24.939Z">
+<meta property="article:author" content="peiyouyao">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2025/04/12/tech/linux/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Linux Common Operations | Perry's</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Perry's</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">tech / reading / muse / painting</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>Schedule</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/04/12/tech/linux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/126999663?v=4">
+      <meta itemprop="name" content="peiyouyao">
+      <meta itemprop="description" content="...">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Perry's">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux Common Operations
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-04-12 00:00:00" itemprop="dateCreated datePublished" datetime="2025-04-12T00:00:00+01:00">2025-04-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-12-17 01:19:24" itemprop="dateModified" datetime="2025-12-17T01:19:24+00:00">2025-12-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <hr>
+<h1 id="🐧-Linux-常见操作对照手册（类比-Windows-系统）"><a href="#🐧-Linux-常见操作对照手册（类比-Windows-系统）" class="headerlink" title="🐧 Linux 常见操作对照手册（类比 Windows 系统）"></a>🐧 Linux 常见操作对照手册（类比 Windows 系统）</h1><blockquote>
+<p>本文旨在帮助熟悉 Windows 系统的用户快速掌握 Linux 中的常用系统操作，同时补充常用命令的含义便于记忆。</p>
+</blockquote>
+<hr>
+<h2 id="🧠-基础信息查看"><a href="#🧠-基础信息查看" class="headerlink" title="🧠 基础信息查看"></a>🧠 基础信息查看</h2><h3 id="查看当前用户名（whoami-→-who-am-i）"><a href="#查看当前用户名（whoami-→-who-am-i）" class="headerlink" title="查看当前用户名（whoami → who am i）"></a>查看当前用户名（whoami → who am i）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">whoami</span>  <span class="comment"># 显示当前登录用户（who am I）</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="查看当前所在路径（pwd-→-print-working-directory）"><a href="#查看当前所在路径（pwd-→-print-working-directory）" class="headerlink" title="查看当前所在路径（pwd → print working directory）"></a>查看当前所在路径（pwd → print working directory）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">pwd</span>  <span class="comment"># 显示当前所在的绝对路径</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="查看系统信息（uname-→-unix-name）"><a href="#查看系统信息（uname-→-unix-name）" class="headerlink" title="查看系统信息（uname → unix name）"></a>查看系统信息（uname → unix name）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">uname</span> -a         <span class="comment"># 查看内核版本、架构</span></span><br><span class="line">lsb_release -a   <span class="comment"># 查看发行版信息</span></span><br><span class="line">hostnamectl      <span class="comment"># 显示主机名和系统版本等信息</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="📁-文件与目录操作"><a href="#📁-文件与目录操作" class="headerlink" title="📁 文件与目录操作"></a>📁 文件与目录操作</h2><h3 id="查看目录内容（ls-→-list-segments）"><a href="#查看目录内容（ls-→-list-segments）" class="headerlink" title="查看目录内容（ls → list segments）"></a>查看目录内容（ls → list segments）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> -lh      <span class="comment"># 列出当前目录下的文件，带单位和时间</span></span><br><span class="line"><span class="built_in">ls</span> -a       <span class="comment"># 显示所有文件，包括隐藏文件（以.开头）</span></span><br><span class="line"><span class="built_in">ls</span> -R       <span class="comment"># 递归列出所有子目录内容</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="复制-移动-删除-文件"><a href="#复制-移动-删除-文件" class="headerlink" title="复制 &#x2F; 移动 &#x2F; 删除 文件"></a>复制 &#x2F; 移动 &#x2F; 删除 文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> file1 file2       <span class="comment"># cp → copy，复制文件</span></span><br><span class="line"><span class="built_in">cp</span> -r dir1 dir2      <span class="comment"># 递归复制整个目录</span></span><br><span class="line"><span class="built_in">mv</span> file newname      <span class="comment"># mv → move，移动或重命名文件</span></span><br><span class="line"><span class="built_in">rm</span> file.txt          <span class="comment"># rm → remove，删除文件</span></span><br><span class="line"><span class="built_in">rm</span> -r folder/        <span class="comment"># 递归删除文件夹</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="修改文件权限（chmod-→-change-mode）"><a href="#修改文件权限（chmod-→-change-mode）" class="headerlink" title="修改文件权限（chmod → change mode）"></a>修改文件权限（chmod → change mode）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chmod</span> +x run.sh      <span class="comment"># 增加执行权限</span></span><br><span class="line"><span class="built_in">chmod</span> 644 file.txt   <span class="comment"># 设定具体权限（rw-r--r--）</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="7-修改归属用户和组（chown-→-change-owner）"><a href="#7-修改归属用户和组（chown-→-change-owner）" class="headerlink" title="7. 修改归属用户和组（chown → change owner）"></a>7. 修改归属用户和组（chown → change owner）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chown</span> yifan file.txt  <span class="comment"># 把文件归属更改为 yifan</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="📋-文件查看与编辑"><a href="#📋-文件查看与编辑" class="headerlink" title="📋 文件查看与编辑"></a>📋 文件查看与编辑</h2><h3 id="快速查看文件内容"><a href="#快速查看文件内容" class="headerlink" title="快速查看文件内容"></a>快速查看文件内容</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> file.txt         <span class="comment"># cat → concatenate，一次性查看全部内容</span></span><br><span class="line">less file.txt        <span class="comment"># 分页查看，可上下翻页</span></span><br><span class="line"><span class="built_in">head</span> -n 10 file.txt  <span class="comment"># 显示前 10 行</span></span><br><span class="line"><span class="built_in">tail</span> -n 10 file.txt  <span class="comment"># 显示后 10 行</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> $(find dir1 dir2 -<span class="built_in">type</span> f) <span class="comment"># 打印出 dir1 dir2 目录下所有文件的内容 (递归进行)</span></span><br><span class="line"></span><br><span class="line">find dir1 dir2 -<span class="built_in">type</span> f | <span class="keyword">while</span> <span class="built_in">read</span> file; <span class="keyword">do</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;===== <span class="variable">$file</span> =====&quot;</span></span><br><span class="line">  <span class="built_in">cat</span> <span class="string">&quot;<span class="variable">$file</span>&quot;</span></span><br><span class="line">  <span class="built_in">echo</span></span><br><span class="line"><span class="keyword">done</span> <span class="comment"># 在文件与文件之间加上 ===== 文件名 =====</span></span><br><span class="line"></span><br><span class="line">find dir1 dir2 -<span class="built_in">type</span> f -name <span class="string">&quot;*.java&quot;</span> | <span class="keyword">while</span> <span class="built_in">read</span> file; <span class="keyword">do</span> <span class="comment"># 限制文件类型</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;===== <span class="variable">$file</span> =====&quot;</span></span><br><span class="line">  <span class="built_in">cat</span> <span class="string">&quot;<span class="variable">$file</span>&quot;</span></span><br><span class="line">  <span class="built_in">echo</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="编辑文件"><a href="#编辑文件" class="headerlink" title="编辑文件"></a>编辑文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nano file.txt        <span class="comment"># 终端内简单编辑器</span></span><br><span class="line">vim file.txt         <span class="comment"># 高级编辑器（vi improved）</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="💻-系统资源管理"><a href="#💻-系统资源管理" class="headerlink" title="💻 系统资源管理"></a>💻 系统资源管理</h2><h3 id="查看进程（top-→-table-of-processes）"><a href="#查看进程（top-→-table-of-processes）" class="headerlink" title="查看进程（top → table of processes）"></a>查看进程（top → table of processes）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">top        <span class="comment"># 实时显示系统进程和资源占用</span></span><br><span class="line">htop       <span class="comment"># 更友好、图形化的 top</span></span><br><span class="line">ps aux     <span class="comment"># 显示所有进程详细信息（ps → process status）</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="查看端口和连接（ss-→-socket-statistics）"><a href="#查看端口和连接（ss-→-socket-statistics）" class="headerlink" title="查看端口和连接（ss → socket statistics）"></a>查看端口和连接（ss → socket statistics）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> ss -tulnp</span><br><span class="line"><span class="comment"># -p: 表示显示 监听该端口的进程（PID/名称）</span></span><br><span class="line"><span class="comment"># -n：不解析服务名称（例如显示 3306 而不是 mysql）</span></span><br><span class="line"><span class="comment"># -l：只显示监听状态（Listen）</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ss -tuln           <span class="comment"># 显示监听的 TCP/UDP 端口</span></span><br><span class="line">lsof -i:8080       <span class="comment"># 查看哪个进程占用端口（lsof → list open files）</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="💿-磁盘与空间"><a href="#💿-磁盘与空间" class="headerlink" title="💿 磁盘与空间"></a>💿 磁盘与空间</h2><h3 id="查看磁盘使用情况（df-→-disk-free）"><a href="#查看磁盘使用情况（df-→-disk-free）" class="headerlink" title="查看磁盘使用情况（df → disk free）"></a>查看磁盘使用情况（df → disk free）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span> -h  <span class="comment"># 查看每个挂载点的磁盘使用情况</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="查看目录大小（du-→-disk-usage）"><a href="#查看目录大小（du-→-disk-usage）" class="headerlink" title="查看目录大小（du → disk usage）"></a>查看目录大小（du → disk usage）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">du</span> -sh .    <span class="comment"># 当前目录总大小</span></span><br><span class="line"><span class="built_in">du</span> -sh *    <span class="comment"># 当前目录下各文件/目录大小</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="查看内存使用情况"><a href="#查看内存使用情况" class="headerlink" title="查看内存使用情况"></a>查看内存使用情况</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">free -h  <span class="comment"># 显示内存和 swap 使用情况</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="🧩-软件包管理"><a href="#🧩-软件包管理" class="headerlink" title="🧩 软件包管理"></a>🧩 软件包管理</h2><h3 id="安装程序（apt-→-advanced-package-tool）"><a href="#安装程序（apt-→-advanced-package-tool）" class="headerlink" title="安装程序（apt → advanced package tool）"></a>安装程序（apt → advanced package tool）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install &lt;软件名&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看已安装的软件"><a href="#查看已安装的软件" class="headerlink" title="查看已安装的软件"></a>查看已安装的软件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dpkg -l  <span class="comment"># 列出所有安装的软件包</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="卸载程序"><a href="#卸载程序" class="headerlink" title="卸载程序"></a>卸载程序</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt remove &lt;软件名&gt;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="⚙️-服务与启动项管理"><a href="#⚙️-服务与启动项管理" class="headerlink" title="⚙️ 服务与启动项管理"></a>⚙️ 服务与启动项管理</h2><h3 id="查看服务状态（systemctl-→-system-control）"><a href="#查看服务状态（systemctl-→-system-control）" class="headerlink" title="查看服务状态（systemctl → system control）"></a>查看服务状态（systemctl → system control）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl status mysql</span><br></pre></td></tr></table></figure>
+
+<h3 id="启动-停止-重启服务"><a href="#启动-停止-重启服务" class="headerlink" title="启动 &#x2F; 停止 &#x2F; 重启服务"></a>启动 &#x2F; 停止 &#x2F; 重启服务</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl start redis</span><br><span class="line"><span class="built_in">sudo</span> systemctl stop redis</span><br><span class="line"><span class="built_in">sudo</span> systemctl restart redis</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="🌐-网络相关"><a href="#🌐-网络相关" class="headerlink" title="🌐 网络相关"></a>🌐 网络相关</h2><h3 id="查看-IP-地址"><a href="#查看-IP-地址" class="headerlink" title="查看 IP 地址"></a>查看 IP 地址</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ip a           <span class="comment"># 查看详细 IP 信息</span></span><br><span class="line">hostname -I    <span class="comment"># 快速查看主机 IP</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="测试网络连接"><a href="#测试网络连接" class="headerlink" title="测试网络连接"></a>测试网络连接</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ping www.baidu.com</span><br><span class="line">curl -I https://google.com</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="✅-推荐工具汇总"><a href="#✅-推荐工具汇总" class="headerlink" title="✅ 推荐工具汇总"></a>✅ 推荐工具汇总</h2><table>
+<thead>
+<tr>
+<th>工具</th>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>htop</td>
+<td><code>sudo apt install htop</code></td>
+<td>进程查看器，替代 top</td>
+</tr>
+<tr>
+<td>ncdu</td>
+<td><code>sudo apt install ncdu</code></td>
+<td>图形化查看目录大小</td>
+</tr>
+<tr>
+<td>tree</td>
+<td><code>sudo apt install tree</code></td>
+<td>以树形结构显示目录</td>
+</tr>
+</tbody></table>
+<hr>
+<blockquote>
+<p>本文由 ChatGPT 整理生成，适合初中高级 Linux 使用者类比 Windows 熟练掌握系统常见操作。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"><i class="fa fa-tag"></i> linux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/04/12/tech/vmware/" rel="prev" title="VMware">
+      <i class="fa fa-chevron-left"></i> VMware
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/04/23/tech/wsl2_docker_install_guide/" rel="next" title="Install Docker in WSL2">
+      Install Docker in WSL2 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%90%A7-Linux-%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C%E5%AF%B9%E7%85%A7%E6%89%8B%E5%86%8C%EF%BC%88%E7%B1%BB%E6%AF%94-Windows-%E7%B3%BB%E7%BB%9F%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">🐧 Linux 常见操作对照手册（类比 Windows 系统）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%A7%A0-%E5%9F%BA%E7%A1%80%E4%BF%A1%E6%81%AF%E6%9F%A5%E7%9C%8B"><span class="nav-number">1.1.</span> <span class="nav-text">🧠 基础信息查看</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E7%94%A8%E6%88%B7%E5%90%8D%EF%BC%88whoami-%E2%86%92-who-am-i%EF%BC%89"><span class="nav-number">1.1.1.</span> <span class="nav-text">查看当前用户名（whoami → who am i）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E6%89%80%E5%9C%A8%E8%B7%AF%E5%BE%84%EF%BC%88pwd-%E2%86%92-print-working-directory%EF%BC%89"><span class="nav-number">1.1.2.</span> <span class="nav-text">查看当前所在路径（pwd → print working directory）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%EF%BC%88uname-%E2%86%92-unix-name%EF%BC%89"><span class="nav-number">1.1.3.</span> <span class="nav-text">查看系统信息（uname → unix name）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%81-%E6%96%87%E4%BB%B6%E4%B8%8E%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C"><span class="nav-number">1.2.</span> <span class="nav-text">📁 文件与目录操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%9B%AE%E5%BD%95%E5%86%85%E5%AE%B9%EF%BC%88ls-%E2%86%92-list-segments%EF%BC%89"><span class="nav-number">1.2.1.</span> <span class="nav-text">查看目录内容（ls → list segments）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E5%88%B6-%E7%A7%BB%E5%8A%A8-%E5%88%A0%E9%99%A4-%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.2.</span> <span class="nav-text">复制 &#x2F; 移动 &#x2F; 删除 文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90%EF%BC%88chmod-%E2%86%92-change-mode%EF%BC%89"><span class="nav-number">1.2.3.</span> <span class="nav-text">修改文件权限（chmod → change mode）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E4%BF%AE%E6%94%B9%E5%BD%92%E5%B1%9E%E7%94%A8%E6%88%B7%E5%92%8C%E7%BB%84%EF%BC%88chown-%E2%86%92-change-owner%EF%BC%89"><span class="nav-number">1.2.4.</span> <span class="nav-text">7. 修改归属用户和组（chown → change owner）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8B-%E6%96%87%E4%BB%B6%E6%9F%A5%E7%9C%8B%E4%B8%8E%E7%BC%96%E8%BE%91"><span class="nav-number">1.3.</span> <span class="nav-text">📋 文件查看与编辑</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9"><span class="nav-number">1.3.1.</span> <span class="nav-text">快速查看文件内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%BE%91%E6%96%87%E4%BB%B6"><span class="nav-number">1.3.2.</span> <span class="nav-text">编辑文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%92%BB-%E7%B3%BB%E7%BB%9F%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86"><span class="nav-number">1.4.</span> <span class="nav-text">💻 系统资源管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E8%BF%9B%E7%A8%8B%EF%BC%88top-%E2%86%92-table-of-processes%EF%BC%89"><span class="nav-number">1.4.1.</span> <span class="nav-text">查看进程（top → table of processes）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%AB%AF%E5%8F%A3%E5%92%8C%E8%BF%9E%E6%8E%A5%EF%BC%88ss-%E2%86%92-socket-statistics%EF%BC%89"><span class="nav-number">1.4.2.</span> <span class="nav-text">查看端口和连接（ss → socket statistics）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%92%BF-%E7%A3%81%E7%9B%98%E4%B8%8E%E7%A9%BA%E9%97%B4"><span class="nav-number">1.5.</span> <span class="nav-text">💿 磁盘与空间</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%A3%81%E7%9B%98%E4%BD%BF%E7%94%A8%E6%83%85%E5%86%B5%EF%BC%88df-%E2%86%92-disk-free%EF%BC%89"><span class="nav-number">1.5.1.</span> <span class="nav-text">查看磁盘使用情况（df → disk free）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%9B%AE%E5%BD%95%E5%A4%A7%E5%B0%8F%EF%BC%88du-%E2%86%92-disk-usage%EF%BC%89"><span class="nav-number">1.5.2.</span> <span class="nav-text">查看目录大小（du → disk usage）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%86%85%E5%AD%98%E4%BD%BF%E7%94%A8%E6%83%85%E5%86%B5"><span class="nav-number">1.5.3.</span> <span class="nav-text">查看内存使用情况</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%A7%A9-%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86"><span class="nav-number">1.6.</span> <span class="nav-text">🧩 软件包管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E7%A8%8B%E5%BA%8F%EF%BC%88apt-%E2%86%92-advanced-package-tool%EF%BC%89"><span class="nav-number">1.6.1.</span> <span class="nav-text">安装程序（apt → advanced package tool）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%B7%B2%E5%AE%89%E8%A3%85%E7%9A%84%E8%BD%AF%E4%BB%B6"><span class="nav-number">1.6.2.</span> <span class="nav-text">查看已安装的软件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%B8%E8%BD%BD%E7%A8%8B%E5%BA%8F"><span class="nav-number">1.6.3.</span> <span class="nav-text">卸载程序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9A%99%EF%B8%8F-%E6%9C%8D%E5%8A%A1%E4%B8%8E%E5%90%AF%E5%8A%A8%E9%A1%B9%E7%AE%A1%E7%90%86"><span class="nav-number">1.7.</span> <span class="nav-text">⚙️ 服务与启动项管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%9C%8D%E5%8A%A1%E7%8A%B6%E6%80%81%EF%BC%88systemctl-%E2%86%92-system-control%EF%BC%89"><span class="nav-number">1.7.1.</span> <span class="nav-text">查看服务状态（systemctl → system control）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8-%E5%81%9C%E6%AD%A2-%E9%87%8D%E5%90%AF%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.7.2.</span> <span class="nav-text">启动 &#x2F; 停止 &#x2F; 重启服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8C%90-%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3"><span class="nav-number">1.8.</span> <span class="nav-text">🌐 网络相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B-IP-%E5%9C%B0%E5%9D%80"><span class="nav-number">1.8.1.</span> <span class="nav-text">查看 IP 地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5"><span class="nav-number">1.8.2.</span> <span class="nav-text">测试网络连接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%85-%E6%8E%A8%E8%8D%90%E5%B7%A5%E5%85%B7%E6%B1%87%E6%80%BB"><span class="nav-number">1.9.</span> <span class="nav-text">✅ 推荐工具汇总</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="peiyouyao"
+      src="https://avatars.githubusercontent.com/u/126999663?v=4">
+  <p class="site-author-name" itemprop="name">peiyouyao</p>
+  <div class="site-description" itemprop="description">...</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/peiyouyao" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;peiyouyao" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:peiyou-yao@outlook.com" title="E-Mail → mailto:peiyou-yao@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">peiyouyao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

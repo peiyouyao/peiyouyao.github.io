@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="在 Java 开发, 刷题中常用的 API 和小技巧 Commonly used APIs and tips in Java development and problem-solving  数组 Array 求长度 nums.length  升序重排 Arrays.sort(nums)  填充数组 Arrays.fill(nums, val)  转化为字符串 Arrays.toString(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tips">
+<meta property="og:url" content="http://example.com/2023/01/26/lang/java_tips/index.html">
+<meta property="og:site_name" content="Perry&#39;s">
+<meta property="og:description" content="在 Java 开发, 刷题中常用的 API 和小技巧 Commonly used APIs and tips in Java development and problem-solving  数组 Array 求长度 nums.length  升序重排 Arrays.sort(nums)  填充数组 Arrays.fill(nums, val)  转化为字符串 Arrays.toString(">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-01-26T00:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-17T01:19:24.879Z">
+<meta property="article:author" content="peiyouyao">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2023/01/26/lang/java_tips/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Tips | Perry's</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Perry's</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">tech / reading / muse / painting</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>Schedule</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/01/26/lang/java_tips/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/126999663?v=4">
+      <meta itemprop="name" content="peiyouyao">
+      <meta itemprop="description" content="...">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Perry's">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Tips
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-01-26 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-26T00:00:00+00:00">2023-01-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-12-17 01:19:24" itemprop="dateModified" datetime="2025-12-17T01:19:24+00:00">2025-12-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/lang/" itemprop="url" rel="index"><span itemprop="name">lang</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <hr>
+<blockquote>
+<p>在 Java 开发, 刷题中常用的 API 和小技巧</p>
+<p>Commonly used APIs and tips in Java development and problem-solving</p>
+</blockquote>
+<h2 id="数组-Array"><a href="#数组-Array" class="headerlink" title="数组 Array"></a>数组 Array</h2><ul>
+<li><p>求长度 <code>nums.length</code></p>
+</li>
+<li><p>升序重排 <code>Arrays.sort(nums)</code></p>
+</li>
+<li><p>填充数组 <code>Arrays.fill(nums, val)</code></p>
+</li>
+<li><p>转化为字符串 <code>Arrays.toString(nums)</code></p>
+</li>
+<li><p>将多维数组转化为字符串 <code>Arrays.deepToString(nums)</code></p>
+</li>
+<li><p>Array -&gt; List <code>new LinkedList(Arrays.asList(nums))</code></p>
+</li>
+<li><p>List -&gt; Array <code>Integer[] array = list.toArray(new Integer[0]);</code></p>
+</li>
+<li><p>字符串数组转化为字符串 <code>new String(chars)</code></p>
+</li>
+<li><p>判断数组元素相同 <code>Arrays.equals(nums1, nums2)</code></p>
+</li>
+<li><p>深拷贝数组</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span>[] original = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line"><span class="type">int</span>[] copy = original.clone();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>二维数组深拷贝</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span>[][] original = &#123;&#123;<span class="number">1</span>, <span class="number">2</span>&#125;, &#123;<span class="number">3</span>, <span class="number">4</span>&#125;&#125;;</span><br><span class="line"><span class="type">int</span>[][] copy = Arrays.stream(original)</span><br><span class="line">                     .map(<span class="type">int</span>[]::clone)</span><br><span class="line">                     .toArray(<span class="type">int</span>[][]::<span class="keyword">new</span>);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="字符串-String"><a href="#字符串-String" class="headerlink" title="字符串 String"></a>字符串 String</h2><ul>
+<li>求长度 <code>str.length()</code></li>
+<li>以<code>regex</code>分割字符串为数组 <code>str.split(regex)</code></li>
+<li>查找目标字符（串）（找不到返回-1） <code>str.indexOf(c)</code> <code>str.lastIndexOf(c)</code> <code>str.indexOf(subStr)</code> <code>str.lastIndexOf(subStr)</code></li>
+<li>判断字符串相同 <code>strA.equals(strB)</code></li>
+<li>比较字符串的字典序 <code>strA.compareTo(strB)</code></li>
+<li>判断是否以目标前缀开头 <code>str.startsWith(prefix)</code></li>
+<li>判断是否以目标后缀结尾 <code>str.endsWith(suffix)</code></li>
+<li>去除首尾空格 <code>str.trim()</code></li>
+<li>全小写 <code>str.toLowerCase()</code></li>
+<li>全大写 <code>str.toUpperCase()</code></li>
+<li>替换字符 <code>str.replace(oldChar, newChar)</code></li>
+<li>替换字符串 <code>str.replace(oldRegex, newRegex)</code></li>
+<li>获取从<code>[start, end - 1]</code>的子串 <code>str.substring(start, end)</code></li>
+<li>获取第i个字符 <code>str.charAt(i)</code></li>
+<li>转化为字符数组 <code>str.toCharArray()</code></li>
+<li>转化为StringBuilder <code>new StringBuilder(str)</code></li>
+<li><strong>转化为整数</strong> <code>Integer.parseInt(str)</code> <code>Integer.valueOf(str)</code></li>
+<li><strong>数字转化为字符串</strong> <code>String.valueOf(num)</code></li>
+<li>翻转字符串 <code>String reversed = new StringBuilder(&quot;hello&quot;).reverse().toString();</code></li>
+</ul>
+<h2 id="可变字符串-StringBuilder"><a href="#可变字符串-StringBuilder" class="headerlink" title="可变字符串 StringBuilder"></a>可变字符串 StringBuilder</h2><ul>
+<li>在末尾添加新字符（串） <code>sb.append(c)</code> <code>sb.append(str)</code></li>
+<li>删除第i个字符 <code>sb.deleteCharAt(i)</code></li>
+<li>删除从<code>[start, end - 1]</code>的子串 <code>sb.delete(start, end)</code></li>
+<li>替换第i个字符 <code>sb.setCharAt(i, newChar)</code></li>
+<li>替换从<code>[start, end - 1]</code>的子串 <code>sb.replace(start, end, str)</code></li>
+<li>在第i个字符之前插入字符串 <code>sb.insert(i, str)</code></li>
+<li>反转字符串 <code>sb.reverse()</code></li>
+<li>转化为String <code>sb.toString()</code></li>
+</ul>
+<h2 id="链表-List"><a href="#链表-List" class="headerlink" title="链表 List"></a>链表 List</h2><ul>
+<li><p>末尾添加元素 <code>list.add(element)</code></p>
+</li>
+<li><p>插入元素 <code>lst.add(index, value)</code></p>
+</li>
+<li><p>获取第i个位置的元素 <code>list.get(i)</code></p>
+</li>
+<li><p>替换第i个位置的元素 <code>list.set(i, newElement)</code></p>
+</li>
+<li><p>删除第i个位置的元素 <code>list.remove(i)</code></p>
+</li>
+<li><p>删除最后一个元素 <code>linkedList.removeLast()</code></p>
+</li>
+<li><p>求长度 <code>list.size()</code></p>
+</li>
+<li><p>判断是否为空 <code>list.isEmpty()</code></p>
+</li>
+<li><p>清空 <code>list.clear()</code></p>
+</li>
+<li><p>判断是否包含某元素 <code>list.contains(object)</code></p>
+</li>
+<li><p>查找元素（找不到返回-1） <code>list.indexOf(object)</code> <code>list.lastIndexOf(object)</code></p>
+</li>
+<li><p>转化为集合 <code>new HashSet&lt;&gt;(list)</code></p>
+</li>
+<li><p>转化为整数数组 <code>list.stream().mapToInt(x -&gt; x).toArray()</code> <code>list.stream.mapToInt(Integer::intValue).toArray()</code></p>
+</li>
+<li><p>转化为字符串数组 <code>(String[]) list.toArray(new String [0])</code></p>
+</li>
+<li><p>深拷贝</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; path = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(Arrays.asList(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>));</span><br><span class="line">List&lt;Integer&gt; copy = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(path);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>与 Set 的转换</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Set&lt;Integer&gt; set = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;&gt;(list);</span><br><span class="line">List&lt;Integer&gt; listFromSet = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(set);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>排序 <code>Collections.sort(list);</code></p>
+</li>
+</ul>
+<h2 id="栈-Stack"><a href="#栈-Stack" class="headerlink" title="栈 Stack"></a>栈 Stack</h2><ul>
+<li>压入栈顶 <code>stk.push(element)</code></li>
+<li>从栈顶弹出 <code>stk.pop()</code></li>
+<li>查看栈顶元素 <code>stk.peek()</code></li>
+<li>求长度 <code>stk.size()</code></li>
+<li>判断是否为空 <code>stk.isEmpty()</code> <code>stk.empty()</code></li>
+</ul>
+<h2 id="单端队列-Queue"><a href="#单端队列-Queue" class="headerlink" title="单端队列 Queue"></a>单端队列 Queue</h2><ul>
+<li>从队尾添加元素 失败会抛异常<code>queue.add(element)</code> 失败会返回false<code>queue.offer(element)</code></li>
+<li>从队头移除元素 空指针会抛异常<code>queue.remove()</code> 空指针会返回null<code>queue.poll()</code></li>
+<li>查看队头元素 空指针会抛异常<code>queue.element()</code> 空指针会返回null<code>queue.peek()</code></li>
+<li>求长度 <code>queue.size()</code></li>
+<li>判断是否为空 <code>queue.isEmpty()</code></li>
+<li>清空 <code>queue.clear()</code></li>
+<li>判断是否包含某元素 <code>queue.contains(object)</code></li>
+</ul>
+<h2 id="双端队列-Deque"><a href="#双端队列-Deque" class="headerlink" title="双端队列 Deque"></a>双端队列 Deque</h2><ul>
+<li>从队尾添加元素 失败会抛异常<code>deque.addLast(element)</code> 失败会返回false<code>deque.offerLast(element)</code></li>
+<li>从队头添加元素 失败会抛异常<code>deque.addFirst(element)</code> <code>deque.push()</code> 失败会返回false<code>deque.offerFirst(element)</code></li>
+<li>从队尾删除元素 空指针会抛异常<code>deque.removeLast()</code> 空指针会返回null<code>deque.pollLast()</code></li>
+<li>从队头删除元素 空指针会抛异常<code>deque.removeFirst()</code> <code>deque.pop()</code> 空指针会返回null<code>deque.pollFirst()</code></li>
+<li>查看队尾元素 空指针会抛异常<code>deque.getLast()</code> 空指针会返回null<code>deque.peekLast()</code></li>
+<li>查看队头元素 空指针会抛异常<code>deque.getFirst()</code> 空指针会返回null<code>deque.peekFirst()</code></li>
+<li>求长度 <code>deque.size()</code></li>
+<li>判断是否为空 <code>deque.isEmpty()</code></li>
+<li>清空 <code>deque.clear()</code></li>
+</ul>
+<h2 id="集合-Set"><a href="#集合-Set" class="headerlink" title="集合 Set"></a>集合 Set</h2><ul>
+<li>添加元素 <code>set.add(element)</code></li>
+<li>删除元素 <code>set.remove(element)</code></li>
+<li>判断是否包含某元素 <code>set.contains(object)</code></li>
+<li>求长度 <code>set.size()</code></li>
+<li>清空 <code>set.clear()</code></li>
+<li>获取不小于key的最小元素（空指针返回null） <code>treeSet.ceiling(key)</code></li>
+<li>获取不大于key的最大元素（空指针返回null） <code>treeSet.floor(key)</code></li>
+<li>获取第一个元素 <code>treeSet.first()</code></li>
+<li>获取最后一个元素 <code>treeSet.last()</code></li>
+<li>转化为整数数组 <code>set.stream().mapToInt(x -&gt; x).toArray()</code></li>
+</ul>
+<h2 id="映射-Map"><a href="#映射-Map" class="headerlink" title="映射 Map"></a>映射 Map</h2><ul>
+<li>添加或修改键值对 <code>map.put(key, val)</code></li>
+<li>删除键值对 <code>map.remove(key)</code></li>
+<li>获取指定键对应的值 <code>map.get(key)</code></li>
+<li>获取指定键对应的值（如果不存在，则设定默认值） <code>map.getOrDefault(key, defaultVal)</code></li>
+<li>判断是否包含某个键 <code>map.containsKey(key)</code></li>
+<li>判断是否包含某个值 <code>map.containsValue(val)</code></li>
+<li>判断是否为空 <code>map.isEmpty()</code></li>
+<li>求长度 <code>map.size()</code></li>
+<li>清空 <code>map.clear()</code></li>
+<li>生成对应的键值对集合 <code>map.entrySet()</code></li>
+<li>获取不小于key的最小元素（空指针返回null） <code>treeMap.ceilingEntry(key)</code></li>
+<li>获取不大于key的最大元素（空指针返回null） <code>treeMap.floorEntry(key)</code></li>
+<li>获取第一个键 <code>treeMap.firstKey()</code></li>
+<li>获取最后一个键 <code>treeMap.lastKey()</code></li>
+</ul>
+<h2 id="键值对-Map-Entry"><a href="#键值对-Map-Entry" class="headerlink" title="键值对 Map.Entry"></a>键值对 Map.Entry</h2><ul>
+<li>获取键值对的键 <code>entry.getKey()</code></li>
+<li>获取键值对的值 <code>entry.getValue()</code></li>
+<li>修改键值对的值 <code>entry.setValue(val)</code></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"><i class="fa fa-tag"></i> java</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/31/tech/frontend_vite_guide/" rel="prev" title="Web Frontend">
+      <i class="fa fa-chevron-left"></i> Web Frontend
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/09/09/lang/java_io/" rel="next" title="Java Exception & IO">
+      Java Exception & IO <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E7%BB%84-Array"><span class="nav-number">1.</span> <span class="nav-text">数组 Array</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2-String"><span class="nav-number">2.</span> <span class="nav-text">字符串 String</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E5%8F%98%E5%AD%97%E7%AC%A6%E4%B8%B2-StringBuilder"><span class="nav-number">3.</span> <span class="nav-text">可变字符串 StringBuilder</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E8%A1%A8-List"><span class="nav-number">4.</span> <span class="nav-text">链表 List</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%88-Stack"><span class="nav-number">5.</span> <span class="nav-text">栈 Stack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E7%AB%AF%E9%98%9F%E5%88%97-Queue"><span class="nav-number">6.</span> <span class="nav-text">单端队列 Queue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8C%E7%AB%AF%E9%98%9F%E5%88%97-Deque"><span class="nav-number">7.</span> <span class="nav-text">双端队列 Deque</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E5%90%88-Set"><span class="nav-number">8.</span> <span class="nav-text">集合 Set</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%A0%E5%B0%84-Map"><span class="nav-number">9.</span> <span class="nav-text">映射 Map</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%AE%E5%80%BC%E5%AF%B9-Map-Entry"><span class="nav-number">10.</span> <span class="nav-text">键值对 Map.Entry</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="peiyouyao"
+      src="https://avatars.githubusercontent.com/u/126999663?v=4">
+  <p class="site-author-name" itemprop="name">peiyouyao</p>
+  <div class="site-description" itemprop="description">...</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/peiyouyao" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;peiyouyao" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:peiyou-yao@outlook.com" title="E-Mail → mailto:peiyou-yao@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">peiyouyao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
